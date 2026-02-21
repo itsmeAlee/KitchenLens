@@ -54,7 +54,7 @@ Home cooks frequently face the challenge of knowing what to cook with what they 
 
 ## 2. User Stories & Acceptance Criteria
 
-### Epic 1: Video Capture & Submission
+### Epic 1: Media Capture & Submission (Video or Photo)
 
 **US-001:** As a user, I want to record a short video or take a photo of my pantry/fridge so that the AI can identify what ingredients I have.
 
@@ -163,44 +163,9 @@ KitchenLens employs a three-agent orchestration pipeline powered by **Gemini 3 P
 - First 3 keyframes extracted from the video chunk
 - User profile (timezone, dietary flags, session history count)
 
-**Gemini 3 Pro API Configuration:**
-```json
-{
-  "model": "gemini-3-pro",
-  "generation_config": {
-    "thinking_level": "high",
-    "temperature": 0.2,
-    "top_p": 0.85,
-    "max_output_tokens": 1024
-  },
-  "system_instruction": "You are a video quality analyst. Evaluate the provided frames for brightness, focus clarity, occlusion level, and ingredient visibility confidence. Output a structured JSON processing plan.",
-  "tools": ["code_execution"]
-}
-```
+**Gemini 3 Pro API Configuration:** High thinking level, temperature 0.2, max 1024 output tokens; system prompt instructs the model to evaluate frame brightness, focus clarity, occlusion, and ingredient visibility.
 
-**Output — `thoughtSignature` v1:**
-```json
-{
-  "agent": "planner",
-  "version": 1,
-  "video_quality_score": 0.87,
-  "frame_clarity": "high",
-  "recommended_sampling_strategy": "keyframe_1fps",
-  "occlusion_level": "medium",
-  "lighting_condition": "adequate",
-  "estimated_ingredient_regions": [
-    { "frame": 2, "region": "top-left", "confidence": 0.91 },
-    { "frame": 5, "region": "center", "confidence": 0.78 }
-  ],
-  "processing_plan": {
-    "skip_frames": [0, 1],
-    "focus_frames": [2, 4, 5, 8, 11],
-    "apply_contrast_boost": true,
-    "apply_sharpness_filter": true
-  },
-  "timestamp": "2026-02-20T12:00:00Z"
-}
-```
+**Output — `thoughtSignature` v1:** JSON object containing video_quality_score (0.0–1.0), frame_clarity, recommended_sampling_strategy, occlusion_level, lighting_condition, estimated_ingredient_regions (frame + region + confidence), and a processing_plan listing which frames to skip or focus on.
 
 **Error Conditions:**
 - If `video_quality_score < 0.4`: Abort pipeline, return `QUALITY_TOO_LOW` error to client
@@ -219,73 +184,9 @@ KitchenLens employs a three-agent orchestration pipeline powered by **Gemini 3 P
 - Keyframe images per the `processing_plan.focus_frames` list (base64 encoded or Appwrite Storage references)
 - User's known allergen/dietary flags
 
-**Gemini 3 Pro API Configuration:**
-```json
-{
-  "model": "gemini-3-pro",
-  "generation_config": {
-    "thinking_level": "high",
-    "media_resolution": "high",
-    "temperature": 0.1,
-    "top_p": 0.9,
-    "max_output_tokens": 4096
-  },
-  "system_instruction": "You are a culinary vision expert. Given a set of kitchen/pantry images, identify every visible food ingredient with high precision. For each ingredient, provide: canonical name, estimated quantity (if visible), freshness state (fresh/stale/unknown), and a bounding box description. Cross-reference the planner's occlusion notes to adjust confidence accordingly.",
-  "inline_data": [
-    { "mime_type": "image/jpeg", "data": "<base64_frame_2>" },
-    { "mime_type": "image/jpeg", "data": "<base64_frame_4>" }
-  ]
-}
-```
+**Gemini 3 Pro API Configuration:** High thinking level, high media resolution, temperature 0.1, max 4096 output tokens; system prompt instructs the model to identify all visible food ingredients with canonical name, estimated quantity, freshness state, and bounding region.
 
-**Output — `thoughtSignature` v2:**
-```json
-{
-  "agent": "vision",
-  "version": 2,
-  "previous_signature": "<thoughtSignature_v1_hash>",
-  "detected_ingredients": [
-    {
-      "id": "ing_001",
-      "canonical_name": "free-range eggs",
-      "common_name": "eggs",
-      "quantity": "6 visible",
-      "unit": "count",
-      "freshness": "fresh",
-      "confidence": 0.96,
-      "source_frame": 2,
-      "bounding_region": "bottom-center"
-    },
-    {
-      "id": "ing_002",
-      "canonical_name": "cherry tomatoes",
-      "common_name": "tomatoes",
-      "quantity": "approx. 12",
-      "unit": "count",
-      "freshness": "fresh",
-      "confidence": 0.88,
-      "source_frame": 5,
-      "bounding_region": "top-right"
-    },
-    {
-      "id": "ing_003",
-      "canonical_name": "parmesan cheese",
-      "common_name": "cheese",
-      "quantity": "partial block",
-      "unit": "block",
-      "freshness": "unknown",
-      "confidence": 0.74,
-      "source_frame": 8,
-      "bounding_region": "left"
-    }
-  ],
-  "total_detected": 3,
-  "low_confidence_suppressed": 1,
-  "allergen_flags_detected": [],
-  "processing_notes": "Contrast boost applied per planner directive. Frame 8 had moderate glare; confidence adjusted downward.",
-  "timestamp": "2026-02-20T12:00:04Z"
-}
-```
+**Output — `thoughtSignature` v2:** JSON object containing detected_ingredients (each with id, canonical_name, common_name, quantity, unit, freshness, confidence, source_frame, bounding_region), total_detected, low_confidence_suppressed, allergen_flags_detected, and processing_notes.
 
 **Keyframe Sampling Logic:**
 - Strategy: **1 FPS, high-resolution** — extracts one frame per second from the video
@@ -308,63 +209,9 @@ KitchenLens employs a three-agent orchestration pipeline powered by **Gemini 3 P
 - Preferred cuisine types (optional user preference)
 - Number of servings requested
 
-**Gemini 3 Pro API Configuration:**
-```json
-{
-  "model": "gemini-3-pro",
-  "generation_config": {
-    "thinking_level": "high",
-    "temperature": 0.7,
-    "top_p": 0.95,
-    "max_output_tokens": 8192,
-    "response_mime_type": "application/json"
-  },
-  "system_instruction": "You are a world-class chef and nutritionist with expertise in home cooking. Using the provided ingredient list (with confidence scores and quantities), generate 3 diverse recipe suggestions. You MUST: (1) Reason through which ingredient combinations make culinary sense, (2) Strictly adhere to the dietary filters provided — these are hard constraints not soft preferences, (3) Prioritize using high-confidence ingredients and avoid building primary dish components from low-confidence detections, (4) Include a 'reasoning' field in your response explaining why each recipe was selected given the available ingredients.",
-  "tools": ["google_search"]
-}
-```
+**Gemini 3 Pro API Configuration:** High thinking level, temperature 0.7, max 8192 output tokens; system prompt instructs the model to reason through ingredient combinations, strictly enforce dietary constraints, and include culinary reasoning for each recipe.
 
-**Output — Final Recipe Payload:**
-```json
-{
-  "agent": "chef",
-  "version": 3,
-  "previous_signature": "<thoughtSignature_v2_hash>",
-  "recipes": [
-    {
-      "id": "recipe_001",
-      "title": "Cherry Tomato & Parmesan Frittata",
-      "description": "A light, protein-rich Italian egg dish perfect for a quick dinner.",
-      "dietary_tags": ["vegetarian", "gluten-free"],
-      "prep_time_minutes": 10,
-      "cook_time_minutes": 20,
-      "servings": 2,
-      "difficulty": "easy",
-      "ingredients_used": ["ing_001", "ing_002", "ing_003"],
-      "ingredients_list": [
-        { "name": "free-range eggs", "amount": "6", "unit": "whole" },
-        { "name": "cherry tomatoes", "amount": "10", "unit": "whole, halved" },
-        { "name": "parmesan cheese", "amount": "40g", "unit": "grated" }
-      ],
-      "instructions": [
-        { "step": 1, "instruction": "Preheat oven to 190°C (375°F)." },
-        { "step": 2, "instruction": "Whisk eggs in a bowl with salt, pepper, and half the parmesan." },
-        { "step": 3, "instruction": "Heat an oven-safe skillet over medium heat. Add halved tomatoes and sauté for 2 minutes." },
-        { "step": 4, "instruction": "Pour egg mixture over tomatoes. Sprinkle remaining parmesan." },
-        { "step": 5, "instruction": "Transfer to oven and bake 12–15 minutes until set. Serve immediately." }
-      ],
-      "reasoning": "High-confidence detection of eggs (0.96), tomatoes (0.88), and cheese (0.74) provides a complete base for a frittata. This classic combination is nutritionally balanced and matches the gluten-free dietary constraint natively.",
-      "nutrition_estimate": {
-        "calories_per_serving": 340,
-        "protein_g": 24,
-        "carbs_g": 8,
-        "fat_g": 22
-      }
-    }
-  ],
-  "timestamp": "2026-02-20T12:00:14Z"
-}
-```
+**Output — Final Recipe Payload:** JSON object containing a recipes array; each recipe includes id, title, description, dietary_tags, prep_time_minutes, cook_time_minutes, servings, difficulty, ingredients_used, ingredients_list, step-by-step instructions, a reasoning field, and an optional nutrition_estimate.
 
 ### 3.5 thoughtSignature Chain Integrity
 
@@ -373,11 +220,7 @@ Each agent signs its output with a SHA-256 hash of the previous signature + its 
 1. **Auditability:** The full reasoning chain can be stored per session for debugging and improvement.
 2. **Statefulness:** Any agent can be re-invoked with a specific previous signature to replay or branch the reasoning (useful for "adjust recipe" UX flows).
 
-```
-thoughtSignature_v1_hash = SHA256(null + planner_payload)
-thoughtSignature_v2_hash = SHA256(thoughtSignature_v1_hash + vision_payload)
-thoughtSignature_v3_hash = SHA256(thoughtSignature_v2_hash + chef_payload)
-```
+Each hash is computed as SHA-256 of the concatenation of the previous signature hash (or "genesis" for v1) and the JSON-serialized agent payload.
 
 ---
 
@@ -387,37 +230,10 @@ thoughtSignature_v3_hash = SHA256(thoughtSignature_v2_hash + chef_payload)
 
 All video optimization occurs **on-device** before any data leaves the app. This protects privacy, reduces bandwidth consumption, and accelerates cloud processing time.
 
-```
-Recorded Video / Captured Photo
-      │
-      ▼
-┌─────────────────────────┐
-│  Step 1: Resolution     │  Downscale to 1280×720 (720p)
-│  Downscaling            │  Maintain aspect ratio (letterbox if needed)
-└────────────┬────────────┘
-             │
-             ▼
-┌─────────────────────────┐
-│  Step 2: Frame Rate     │  Reduce to 15 FPS (from native 30/60 FPS)
-│  Reduction              │  Use temporal averaging for smooth output
-└────────────┬────────────┘
-             │
-             ▼
-┌─────────────────────────┐
-│  Step 3: Vision         │  Contrast Enhancement (CLAHE algorithm)
-│  Filters                │  Unsharp Mask for ingredient edge sharpening
-└────────────┬────────────┘
-             │
-             ▼
-┌─────────────────────────┐
-│  Step 4: H.264          │  CRF 28, fast preset
-│  Re-encoding            │  Audio stripped (not needed)
-└────────────┬────────────┘
-             │
-             ▼
-      Optimized Video
-      (≤60% original size)
-```
+- **Step 1 — Resolution Downscaling:** Downscale to 1280×720 (720p); maintain aspect ratio with letterboxing if needed
+- **Step 2 — Frame Rate Reduction:** Reduce to 15 FPS (from native 30/60 FPS) using temporal averaging
+- **Step 3 — Vision Filters:** Apply CLAHE contrast enhancement and unsharp mask for ingredient edge sharpening
+- **Step 4 — H.264 Re-encoding:** Encode with CRF 28 (fast preset), strip audio track; result is ≤60% of original file size
 
 ### 4.2 Vision Filters — Technical Specification
 
@@ -430,15 +246,6 @@ Vision Filters are applied to the recorded video during local pre-processing to 
 | Saturation Boost | HSL adjustment | `saturation_multiplier=1.2` | Makes food colors more discriminable for the vision model |
 | Denoising | Median filter | `kernel_size=3` | Reduces noise from low-light environments |
 
-**FFmpeg Filter Chain:**
-```
-ffmpeg -i input.mp4 \
-  -vf "scale=1280:720,fps=15,unsharp=5:5:1.0:5:5:0.0,eq=saturation=1.2,hqdn3d=3:3:6:6" \
-  -c:v libx264 -crf 28 -preset fast \
-  -an \
-  output_optimized.mp4
-```
-
 ### 4.3 Progressive Chunked Upload
 
 **Requirement:** AI analysis should begin as soon as possible after the recorded video file is available, reducing perceived wait time.
@@ -449,14 +256,7 @@ ffmpeg -i input.mp4 \
 3. The Appwrite Function (serverless) is triggered on the first chunk arrival and begins Agent 1 (Planner) analysis immediately.
 4. Subsequent chunks allow Agent 2 (Vision) to process more frames as they become available.
 
-**Chunk Configuration:**
-```dart
-const int CHUNK_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
-const int MAX_CONCURRENT_CHUNKS = 3;           // Upload up to 3 chunks in parallel
-const Duration CHUNK_TIMEOUT = Duration(seconds: 30);
-const int MAX_RETRY_ATTEMPTS = 5;
-const Duration RETRY_BACKOFF_BASE = Duration(seconds: 2); // Exponential backoff
-```
+Chunk size is 2MB; up to 3 chunks upload in parallel; failed chunks retry with exponential backoff (max 5 attempts, 30-second timeout per chunk).
 
 ### 4.4 Keyframe Sampling
 
@@ -465,14 +265,7 @@ For the Vision Agent, keyframes are extracted at **1 FPS** at the highest availa
 - The **optimized video** is compressed for network efficiency
 - The **keyframes** retain maximum visual information for AI inference
 
-**Sampling Logic:**
-```dart
-// Extract 1 frame per second from the ORIGINAL (pre-compressed) video
-// Total frames for a 15s video: 15 keyframes
-// Each keyframe: JPEG, 95% quality, max 1920px wide
-final keyframeInterval = Duration(seconds: 1);
-final maxKeyframes = videoDuration.inSeconds; // 1 per second
-```
+Keyframes are extracted at 1 FPS from the original (pre-compressed) video; each keyframe is JPEG at 95% quality, max 1920px wide; a 15-second video produces 15 keyframes.
 
 ---
 
@@ -516,70 +309,36 @@ final maxKeyframes = videoDuration.inSeconds; // 1 per second
 
 ## 6. Flutter Package Manifest
 
-### 6.1 Core Dependencies (`pubspec.yaml`)
+### 6.1 Core Dependencies
 
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
+| Package | Version | Purpose |
+|---|---|---|
+| `camera` | ^0.11.0 | Camera preview and raw video/photo capture |
+| `video_compress` | ^3.1.3 | On-device video compression (720p, bitrate control) |
+| `ffmpeg_kit_flutter` | ^6.0.3 | FFmpeg for vision filters, frame extraction, and encoding |
+| `video_thumbnail` | ^0.5.3 | Fast keyframe extraction |
+| `image` | ^4.1.7 | Dart-native image manipulation |
+| `appwrite` | ^13.0.0 | Official Appwrite Flutter SDK (Auth, Storage, DB, Realtime) |
+| `flutter_riverpod` | ^2.5.1 | Reactive state management |
+| `riverpod_annotation` | ^2.3.5 | Code generation for providers |
+| `go_router` | ^14.2.0 | Declarative routing |
+| `hive_flutter` | ^1.1.0 | Lightweight key-value store for offline caching |
+| `isar` / `isar_flutter_libs` | ^3.1.7 | High-performance local database for ingredient history |
+| `dio` | ^5.4.3 | HTTP client with interceptors |
+| `connectivity_plus` | ^6.0.3 | Network connectivity detection for offline mode |
+| `flutter_animate` | ^4.5.0 | Smooth animations for streaming recipe reveal |
+| `shimmer` | ^3.0.0 | Loading skeleton screens |
+| `cached_network_image` | ^3.3.1 | Efficient remote image loading |
+| `lottie` | ^3.1.0 | Lottie animations for processing states |
+| `freezed_annotation` | ^2.4.1 | Immutable data classes |
+| `json_annotation` | ^4.9.0 | JSON serialization |
+| `path_provider` | ^2.1.3 | File system paths for temp chunk storage |
+| `permission_handler` | ^11.3.1 | Camera/storage permissions |
+| `uuid` | ^4.4.0 | UUID generation for session IDs |
+| `crypto` | ^3.0.3 | SHA-256 for thoughtSignature hashing |
+| `logger` | ^2.3.0 | Structured logging |
 
-  # Camera & Media
-  camera: ^0.11.0               # Camera preview and raw video capture
-  video_compress: ^3.1.3        # On-device video compression (720p, bitrate control)
-  ffmpeg_kit_flutter: ^6.0.3    # FFmpeg for vision filters, frame extraction, chunking
-  video_thumbnail: ^0.5.3       # Fast keyframe extraction (thumbnail generation)
-  image: ^4.1.7                 # Dart-native image manipulation (filter application)
-
-  # Appwrite
-  appwrite: ^13.0.0             # Official Appwrite Flutter SDK (Auth, Storage, DB, Realtime)
-
-  # Google Generative AI (used in Appwrite Functions; listed here for reference SDK alignment)
-  # Note: Direct Gemini calls are made from Appwrite Functions (Node.js), NOT from Flutter client
-
-  # State Management
-  flutter_riverpod: ^2.5.1      # Reactive state management
-  riverpod_annotation: ^2.3.5   # Code generation for providers
-
-  # Navigation
-  go_router: ^14.2.0            # Declarative routing
-
-  # Local Storage & Caching
-  hive_flutter: ^1.1.0          # Lightweight key-value store for offline caching
-  isar: ^3.1.7                  # High-performance local database (ingredient history)
-  isar_flutter_libs: ^3.1.7
-
-  # Networking
-  dio: ^5.4.3                   # HTTP client with interceptors
-  connectivity_plus: ^6.0.3     # Network connectivity detection for offline mode
-
-  # UI Components
-  flutter_animate: ^4.5.0       # Smooth animations for streaming recipe reveal
-  shimmer: ^3.0.0               # Loading skeleton screens
-  cached_network_image: ^3.3.1  # Efficient remote image loading
-  lottie: ^3.1.0                # JSON-based animations (processing states)
-
-  # Utilities
-  freezed_annotation: ^2.4.1    # Immutable data classes
-  json_annotation: ^4.9.0       # JSON serialization
-  path_provider: ^2.1.3         # File system paths for temp chunk storage
-  permission_handler: ^11.3.1   # Camera/microphone/storage permissions
-  uuid: ^4.4.0                  # UUID generation for session IDs
-  crypto: ^3.0.3                # SHA-256 for thoughtSignature hashing
-  logger: ^2.3.0                # Structured logging
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  build_runner: ^2.4.9
-  freezed: ^2.4.7
-  json_serializable: ^6.8.0
-  riverpod_generator: ^2.4.0
-  isar_generator: ^3.1.7
-  flutter_lints: ^4.0.0
-  mocktail: ^1.0.4
-  integration_test:
-    sdk: flutter
-```
+**Dev dependencies:** `build_runner`, `freezed`, `json_serializable`, `riverpod_generator`, `isar_generator`, `flutter_lints`, `mocktail`, `integration_test`.
 
 ---
 
@@ -757,17 +516,7 @@ dev_dependencies:
 
 ### 11.3 Connectivity Detection
 
-```dart
-// Using connectivity_plus
-final connectivityResult = await Connectivity().checkConnectivity();
-if (connectivityResult == ConnectivityResult.none) {
-  // Route to offline queue handler
-  ref.read(scanQueueProvider.notifier).enqueueOfflineScan(optimizedVideoPath);
-} else {
-  // Proceed with immediate upload
-  ref.read(uploadProvider.notifier).startChunkedUpload(optimizedVideoPath);
-}
-```
+On launch and scan attempt, connectivity is checked; if offline, the scan is queued locally and uploaded automatically when connection is restored.
 
 ### 11.4 Progressive Enhancement Strategy
 
