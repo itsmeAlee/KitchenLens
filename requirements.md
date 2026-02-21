@@ -28,7 +28,7 @@
 
 ### 1.1 Vision Statement
 
-KitchenLens is an AI-powered mobile application that allows users to point their camera at a collection of kitchen ingredients and receive intelligent, personalized recipe suggestions in real time. The system leverages a multi-agent Gemini 3 Pro pipeline to analyze video streams, detect ingredients with high fidelity, and reason about recipes tailored to the user's dietary profile and available inventory.
+KitchenLens is an AI-powered mobile application that allows users to record a short video or take a photo of their kitchen ingredients and receive intelligent, personalized recipe suggestions. The system leverages a multi-agent Gemini 3 Pro pipeline to analyze recorded videos and captured photos, detect ingredients with high fidelity, and reason about recipes tailored to the user's dietary profile and available inventory.
 
 ### 1.2 Core Problem Statement
 
@@ -45,10 +45,10 @@ Home cooks frequently face the challenge of knowing what to cook with what they 
 
 ### 1.4 Key Value Propositions
 
-- **Zero manual input** — Scan → Detect → Cook
+- **Zero manual input** — Scan → Detect → Cook (via **Video** recording or **Photo** capture)
 - **Personalized AI reasoning** — Dietary filters applied at the reasoning layer, not post-hoc
-- **Offline resilience** — Scan locally, sync and process when connectivity returns
-- **Progressive UX** — Recipe results begin streaming before the full video is processed
+- **Offline resilience** — Capture locally, sync and process when connectivity returns
+- **Progressive UX** — Recipe results begin streaming as soon as the uploaded media is processed
 
 ---
 
@@ -56,36 +56,39 @@ Home cooks frequently face the challenge of knowing what to cook with what they 
 
 ### Epic 1: Video Capture & Submission
 
-**US-001:** As a user, I want to record a short video of my pantry/fridge so that the AI can identify what ingredients I have.
+**US-001:** As a user, I want to record a short video or take a photo of my pantry/fridge so that the AI can identify what ingredients I have.
 
 - **Acceptance Criteria:**
   - Camera preview launches within 500ms of tapping the scan button
-  - Default recording duration is 15–30 seconds; user can stop early
-  - Recording is constrained to rear camera, with flash-assist toggle
-  - UI displays real-time recording progress and estimated upload state
+  - **Video mode:** Default recording duration is 15–30 seconds; user can stop early
+  - **Photo mode:** User takes one or more photos of their ingredients; photos are uploaded directly
+  - Recording/capture is constrained to rear camera, with flash-assist toggle
+  - UI displays recording/capture progress and estimated upload state
 
-**US-002:** As a user, I want the video to be automatically optimized before upload so that it processes faster on slow connections.
+**US-002:** As a user, I want the recorded video to be automatically optimized before upload so that it processes faster on slow connections.
 
 - **Acceptance Criteria:**
   - Video is downscaled to 720p (1280×720) and re-encoded at 15 FPS locally
   - Vision filters (adaptive contrast enhancement, unsharp mask) are applied to frames
   - Compression results in ≤ 60% original file size without perceptible quality loss
   - Processing occurs on a background isolate and does not block the UI thread
+  - For **Photo mode**, photos are uploaded directly without FFmpeg compression; a simplified processing path is used
 
-**US-003:** As a user, I want chunked progressive upload so that AI processing can begin while I'm still recording.
+**US-003:** As a user, I want chunked progressive upload so that AI processing can begin as soon as my media is uploaded.
 
 - **Acceptance Criteria:**
-  - Video chunks of 2MB are uploaded progressively as they are encoded
+  - Recorded video chunks of 2MB are uploaded progressively after recording completes
   - Appwrite Storage multipart upload endpoints are used for chunked delivery
   - If upload is interrupted, the system resumes from the last completed chunk (resumable upload)
   - A visual progress indicator shows "Analyzing…" as chunks are received by backend
 
 ### Epic 2: Ingredient Detection (Vision Agent)
 
-**US-004:** As a user, I want the AI to identify all visible ingredients in my scan video.
+**US-004:** As a user, I want the AI to identify all visible ingredients in my recorded video or captured photo.
 
 - **Acceptance Criteria:**
-  - The Vision Agent extracts keyframes at 1 FPS (high-resolution) from the uploaded video
+  - For **Video mode**: The Vision Agent extracts keyframes at 1 FPS (high-resolution) from the uploaded video
+  - For **Photo mode**: The Vision Agent processes the uploaded photo(s) directly as keyframes; the Planner Agent step may be simplified or skipped
   - Detected ingredient list is displayed to the user within 10 seconds of full upload
   - Each ingredient is shown with a confidence score (≥70% threshold for display)
   - Users can manually add, remove, or confirm detected ingredients
@@ -93,9 +96,9 @@ Home cooks frequently face the challenge of knowing what to cook with what they 
 **US-005:** As a user, I want the system to handle poor lighting or cluttered shelves gracefully.
 
 - **Acceptance Criteria:**
-  - Planner Agent flags low-quality video segments and triggers re-capture prompt
+  - Planner Agent flags low-quality video segments or photos and triggers re-capture prompt
   - Confidence scores below 40% are suppressed and a "tap to add manually" hint is shown
-  - System degrades gracefully to text-based ingredient entry if video quality is insufficient
+  - System degrades gracefully to text-based ingredient entry if media quality is insufficient
 
 ### Epic 3: Recipe Generation (Chef Agent)
 
@@ -287,7 +290,7 @@ KitchenLens employs a three-agent orchestration pipeline powered by **Gemini 3 P
 **Keyframe Sampling Logic:**
 - Strategy: **1 FPS, high-resolution** — extracts one frame per second from the video
 - Implementation: `video_thumbnail` + `ffmpeg_kit_flutter` for frame extraction
-- Resolution: Native capture resolution (max 1080p) preserved for keyframes; only the streaming preview is at 720p/15fps
+- Resolution: Native capture resolution (max 1080p) preserved for keyframes; only the optimized upload copy is at 720p/15fps
 - Frame format: JPEG at 95% quality, max 1920×1440px
 
 ---
@@ -385,7 +388,7 @@ thoughtSignature_v3_hash = SHA256(thoughtSignature_v2_hash + chef_payload)
 All video optimization occurs **on-device** before any data leaves the app. This protects privacy, reduces bandwidth consumption, and accelerates cloud processing time.
 
 ```
-Raw Camera Feed
+Recorded Video / Captured Photo
       │
       ▼
 ┌─────────────────────────┐
@@ -418,7 +421,7 @@ Raw Camera Feed
 
 ### 4.2 Vision Filters — Technical Specification
 
-Vision Filters are applied to the video stream to artificially enhance ingredient visibility for the AI model. They are applied locally using `ffmpeg_kit_flutter`.
+Vision Filters are applied to the recorded video during local pre-processing to artificially enhance ingredient visibility for the AI model. They are applied locally using `ffmpeg_kit_flutter`.
 
 | Filter | Algorithm | Parameters | Purpose |
 |---|---|---|---|
@@ -438,13 +441,13 @@ ffmpeg -i input.mp4 \
 
 ### 4.3 Progressive Chunked Upload
 
-**Requirement:** AI analysis must begin before the full video is uploaded, reducing perceived wait time.
+**Requirement:** AI analysis should begin as soon as possible after the recorded video file is available, reducing perceived wait time.
 
 **Mechanism:**
-1. As `ffmpeg_kit_flutter` encodes the video in real time, completed 2MB segments are written to a temporary local buffer.
-2. A background `Isolate` monitors the buffer and initiates Appwrite multipart upload for each completed chunk.
+1. After recording completes, `ffmpeg_kit_flutter` encodes the recorded video; completed 2MB segments are written to a temporary local buffer.
+2. A background `Isolate` monitors the buffer and initiates Appwrite multipart upload for each completed chunk of the **recorded video file**.
 3. The Appwrite Function (serverless) is triggered on the first chunk arrival and begins Agent 1 (Planner) analysis immediately.
-4. Subsequent chunks trigger Agent 2 (Vision) incrementally as more frames become available.
+4. Subsequent chunks allow Agent 2 (Vision) to process more frames as they become available.
 
 **Chunk Configuration:**
 ```dart
@@ -457,9 +460,9 @@ const Duration RETRY_BACKOFF_BASE = Duration(seconds: 2); // Exponential backoff
 
 ### 4.4 Keyframe Sampling
 
-For the Vision Agent, keyframes are extracted at **1 FPS** at the highest available resolution (bypassing the 720p/15fps optimization stream). This dual-stream strategy ensures:
+For the Vision Agent, keyframes are extracted at **1 FPS** at the highest available resolution (bypassing the 720p/15fps optimization encoding). This dual-pass strategy ensures:
 
-- The **streaming video** is optimized for network efficiency
+- The **optimized video** is compressed for network efficiency
 - The **keyframes** retain maximum visual information for AI inference
 
 **Sampling Logic:**
@@ -770,7 +773,7 @@ if (connectivityResult == ConnectivityResult.none) {
 
 | Connectivity Level | Behavior |
 |---|---|
-| Full (WiFi / 4G+) | Full pipeline: 720p stream + 1FPS keyframes + real-time results |
+| Full (WiFi / 4G+) | Full pipeline: 720p optimized video + 1FPS keyframes + streamed results |
 | Degraded (3G) | Increase compression (CRF 32), reduce keyframes to 0.5FPS, defer nutrition calculation |
 | Minimal (2G / Edge) | Capture only; queue for upload. Show "Queued for processing" status. |
 | None | Full offline mode; local scan storage only |
