@@ -130,7 +130,7 @@ kitchenlens/
 │   │   │           ├── camera_preview_widget.dart
 │   │   │           ├── recording_controls_widget.dart
 │   │   │           ├── upload_progress_widget.dart
-│   │   │           └── vision_filter_overlay.dart
+│   │   │           └── vision_filter_overlay.dart  # Recording-time UI overlay only (not live AI inference)
 │   │   │
 │   │   ├── ingredients/                  # Ingredient detection results
 │   │   │   ├── data/
@@ -269,6 +269,8 @@ appwriteClientProvider (core)
 ### 3.1 Camera Setup
 
 **File:** `lib/features/scan/data/datasources/camera_datasource.dart`
+
+> **Note:** `CameraDataSource` is used for **recording a video** (15–30s) or **taking a photo** that is then submitted to the backend. It does not stream live camera frames to the backend or perform live AI inference.
 
 ```dart
 import 'package:camera/camera.dart';
@@ -425,6 +427,8 @@ class VideoProcessorDataSource {
 ### 3.3 Progressive Chunked Upload
 
 **File:** `lib/features/scan/data/datasources/upload_datasource.dart`
+
+> **Note:** This uploader handles uploading a **recorded video file** (or captured photo) to Appwrite Storage in chunks. It does not stream a live camera feed — recording must be complete before upload begins.
 
 ```dart
 import 'dart:io';
