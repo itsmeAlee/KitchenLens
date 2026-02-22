@@ -175,16 +175,40 @@ subscription.stream.listen((event) {
 
 ## 3. Why This Architecture?
 
-1.  **Decoupled:** The frontend doesn't need to know about Python or LangGraph. It just talks to Appwrite.
-2.  **Scalable:** The Python service is stateless (state is in Appwrite DB/Storage). You can scale the Python workers independently.
-3.  **Secure:** The Python service uses a server-side API Key. The frontend only uses user-scoped JWTs.
-4.  **Agentic State:** LangGraph is perfect for managing the complex state *within* the processing pipeline, while Appwrite manages the persistent state of the user's data.
+1.  **Mobile-Optimized (Latency):** Direct API calls from mobile to Python for video processing would require keeping a connection open for 30s+, which is fragile on cellular networks. By uploading to Appwrite Storage first (which handles resumes/retries natively) and using Webhooks, the mobile app can "fire and forget."
+2.  **Decoupled:** The frontend acts as a "dumb client" that only knows about Appwrite. It doesn't need to manage the complexity of the AI service's endpoints or load balancing.
+3.  **Scalable:** The Python service is stateless (state is in Appwrite DB/Storage). You can scale the Python workers independently of the Appwrite backend.
+4.  **Secure:** The Python service uses a server-side API Key. The frontend only uses user-scoped JWTs, keeping your backend logic private.
 
-## 4. Next Steps
+## 5. Recommended Enhancements for Speed & Scalability
+
+To make your app "fast and better," consider integrating these additional frameworks into your Python stack:
+
+### A. Task Queue: Celery or Arq + Redis
+**Problem:** `BackgroundTasks` in FastAPI is simple but risky. If the server restarts, tasks are lost. Video processing is heavy and long-running.
+**Solution:** Use **Celery** or **Arq** (a lighter async alternative) backed by **Redis**.
+*   **Why:** Ensures tasks are persisted. If a worker crashes, the job is retried. It allows you to run expensive video processing on separate "heavy" worker nodes while keeping your FastAPI nodes lightweight.
+
+### B. LLM Routing: LiteLLM
+**Problem:** You might want to switch between Gemini, OpenAI, or Anthropic for different agents (e.g., Gemini for Vision, GPT-4o for Planning) or handle rate limits.
+**Solution:** **LiteLLM**.
+*   **Why:** It provides a unified interface for 100+ LLMs. It handles fallback logic (e.g., "If Gemini 429s, try GPT-4") automatically, making your app more resilient.
+
+### C. Prompt Optimization: DSPy
+**Problem:** Manually tuning prompts for LangChain agents can be brittle.
+**Solution:** **DSPy**.
+*   **Why:** Instead of writing string prompts, you write code. DSPy "compiles" your pipeline by automatically optimizing the prompts based on examples. It can significantly improve the accuracy of your Planner and Chef agents.
+
+### D. Video Processing: FFmpeg (Python Wrapper)
+**Problem:** Native Python video libraries can be slow.
+**Solution:** **ffmpeg-python**.
+*   **Why:** Use it to extract keyframes or downscale video on the server side *before* sending frames to the Vision Agent. This reduces the token cost and latency of the LLM call.
+
+## 6. Next Steps
 
 1.  **Deploy Appwrite:** Ensure you have a project set up.
 2.  **Develop Python Service:**
     *   Set up a new repo or folder `backend-ai`.
-    *   Install `fastapi`, `uvicorn`, `appwrite`, `langchain`, `langgraph`.
+    *   Install `fastapi`, `uvicorn`, `appwrite`, `langchain`, `langgraph`, `celery`, `redis`.
     *   Implement the `process_scan` logic.
 3.  **Configure Webhooks:** Point Appwrite to your local tunnel (e.g., Ngrok) for testing, then to your production URL.
