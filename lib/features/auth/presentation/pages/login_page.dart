@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppDimensions.xl),
@@ -61,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withAlpha(25),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -141,8 +142,10 @@ class _LoginPageState extends State<LoginPage> {
                     double.infinity,
                     AppDimensions.minTapTarget,
                   ),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppDimensions.borderRadiusMd,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusMd,
+                    ),
                   ),
                 ),
                 onPressed: () {

@@ -1,0 +1,61 @@
+﻿Analyzing KitchenLens...                                        
+
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\auth\presentation\pages\auth_page.dart:1:8 - unnecessary_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\auth\presentation\pages\login_page.dart:65:46 - deprecated_member_use
+  error - The getter 'backgroundDark' isn't defined for the type 'AppColors' - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:82:43 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:301:43 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:388:41 - undefined_getter
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\home\presentation\pages\home_page.dart:1:8 - unnecessary_import
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\ingredients\presentation\pages\ingredients_review_page.dart:1:8 - unnecessary_import
+  error - Expected to find ']' - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:135:13 - expected_token
+  error - Too many positional arguments: 0 expected, but 11 found - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:136:13 - extra_positional_arguments_could_be_named
+  error - Undefined name 'isDark' - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:176:28 - undefined_identifier
+  error - Undefined name 'isDark' - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:185:28 - undefined_identifier
+  error - Expected to find ')' - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:226:11 - expected_token
+  error - The getter 'backgroundDark' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:38:33 - undefined_getter
+  error - The getter 'backgroundLight' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:39:33 - undefined_getter
+  error - The getter 'backgroundDark' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:76:49 - undefined_getter
+  error - The getter 'backgroundLight' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:77:49 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:106:45 - undefined_getter
+  error - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:299:45 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:377:43 - undefined_getter
+  error - The getter 'textSecondaryLight' isn't defined for the type 'AppColors' - lib\features\recipes\presentation\pages\recipe_detail_page.dart:433:60 - undefined_getter
+warning - The declaration '_toggleMode' isn't referenced - lib\features\scan\presentation\pages\capture_page.dart:31:8 - unused_element
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\scan\presentation\pages\capture_page.dart:100:54 - deprecated_member_use
+  error - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\capture_page.dart:130:39 - argument_type_not_assignable
+  error - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\capture_page.dart:163:39 - argument_type_not_assignable
+  error - The argument type 'Object' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\capture_page.dart:206:47 - argument_type_not_assignable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\scan\presentation\pages\capture_page.dart:235:31 - deprecated_member_use
+  error - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\capture_page.dart:255:25 - argument_type_not_assignable
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\scan\presentation\pages\processing_page.dart:2:8 - unnecessary_import
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'Widget', is a potentially non-nullable type - lib\features\scan\presentation\pages\processing_page.dart:456:10 - body_might_complete_normally
+  error - Expected to find ';' - lib\features\scan\presentation\pages\processing_page.dart:529:11 - expected_token
+warning - Dead code - lib\features\scan\presentation\pages\processing_page.dart:529:12 - dead_code
+  error - Expected an identifier - lib\features\scan\presentation\pages\processing_page.dart:529:12 - missing_identifier
+  error - Expected to find ';' - lib\features\scan\presentation\pages\processing_page.dart:529:12 - expected_token
+  error - Unexpected text ',' - lib\features\scan\presentation\pages\processing_page.dart:529:12 - unexpected_token
+  error - Expected an identifier - lib\features\scan\presentation\pages\processing_page.dart:530:9 - missing_identifier
+  error - Expected to find ';' - lib\features\scan\presentation\pages\processing_page.dart:530:9 - expected_token
+  error - Unexpected text ')' - lib\features\scan\presentation\pages\processing_page.dart:530:9 - unexpected_token
+  error - Expected an identifier - lib\features\scan\presentation\pages\processing_page.dart:530:10 - missing_identifier
+  error - Unexpected text ',' - lib\features\scan\presentation\pages\processing_page.dart:530:10 - unexpected_token
+  error - Expected to find ';' - lib\features\scan\presentation\pages\processing_page.dart:602:15 - expected_token
+  error - Expected an identifier - lib\features\scan\presentation\pages\processing_page.dart:602:16 - missing_identifier
+  error - Unexpected text ',' - lib\features\scan\presentation\pages\processing_page.dart:602:16 - unexpected_token
+  error - Invalid constant value - lib\features\scan\presentation\pages\upload_page.dart:138:51 - invalid_constant
+  error - The getter 'textSecondaryLight' isn't defined for the type 'AppColors' - lib\features\scan\presentation\pages\upload_page.dart:138:61 - undefined_getter
+  error - The getter 'textSecondaryLight' isn't defined for the type 'AppColors' - lib\features\scan\presentation\pages\upload_page.dart:152:29 - undefined_getter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\scan\presentation\pages\upload_page.dart:182:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\scan\presentation\pages\upload_page.dart:197:44 - deprecated_member_use
+  error - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\upload_page.dart:227:23 - argument_type_not_assignable
+  error - A value of type 'double' can't be assigned to a parameter of type 'BorderRadiusGeometry?' in a const constructor - lib\features\scan\presentation\pages\upload_page.dart:240:19 - const_constructor_param_type_mismatch
+  error - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - lib\features\scan\presentation\pages\upload_page.dart:240:33 - argument_type_not_assignable
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\scan_result\presentation\pages\scan_result_page.dart:1:8 - unnecessary_import
+   info - Unnecessary use of multiple underscores - lib\features\scan_result\presentation\pages\scan_result_page.dart:110:49 - unnecessary_underscores
+  error - The getter 'backgroundDark' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:30:25 - undefined_getter
+  error - The getter 'backgroundLight' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:31:25 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:210:35 - undefined_getter
+  error - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:213:37 - undefined_getter
+  error - The getter 'surfaceDark' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:248:35 - undefined_getter
+  error - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors' - lib\features\settings\presentation\pages\settings_page.dart:251:37 - undefined_getter
+

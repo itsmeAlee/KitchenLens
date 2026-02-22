@@ -135,7 +135,7 @@ class _UploadPageState extends State<UploadPage> {
                       )
                 : Text(
                     '${stepIndex + 1}',
-                    style: const TextStyle(color: AppColors.textSecondaryLight),
+                    style: const TextStyle(color: AppColors.textSecondary),
                   ),
           ),
         ),
@@ -149,7 +149,7 @@ class _UploadPageState extends State<UploadPage> {
                 : FontWeight.normal,
             color: isActive || isCompleted
                 ? Theme.of(context).colorScheme.onSurface
-                : AppColors.textSecondaryLight,
+                : AppColors.textSecondary,
           ),
         ),
       ],
@@ -179,7 +179,7 @@ class _UploadPageState extends State<UploadPage> {
                 height: 200,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.05),
+                  color: AppColors.primary.withAlpha(13),
                 ),
               )
               .animate(onPlay: (controller) => controller.repeat())
@@ -194,7 +194,7 @@ class _UploadPageState extends State<UploadPage> {
                 height: 150,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withAlpha(38),
                 ),
               )
               .animate(onPlay: (controller) => controller.repeat(reverse: true))
@@ -224,7 +224,7 @@ class _UploadPageState extends State<UploadPage> {
       height: 12,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: AppDimensions.borderRadiusFull,
+        borderRadius: BorderRadius.circular(999),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -235,9 +235,9 @@ class _UploadPageState extends State<UploadPage> {
                 width:
                     constraints.maxWidth *
                     (_currentStep > 0 ? 1.0 : _uploadProgress),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.primary,
-                  borderRadius: AppDimensions.borderRadiusFull,
+                  borderRadius: BorderRadius.circular(999),
                 ),
               ),
             ],

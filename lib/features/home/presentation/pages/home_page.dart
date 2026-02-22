@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       body: SafeArea(
@@ -43,10 +42,7 @@ class _HomePageState extends State<HomePage> {
                         height: 48,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            color: isDark ? Colors.grey.shade700 : Colors.white,
-                            width: 2,
-                          ),
+                          border: Border.all(color: Colors.white, width: 2),
                           image: const DecorationImage(
                             image: CachedNetworkImageProvider(
                               'https://lh3.googleusercontent.com/aida-public/AB6AXuDDKDKW9KBpXgAeoDm2wd9cAz16G6YXiO5oGw_2j74f-dRZFowUsbsVpupBaffUV5cIT_oKJNbXtDsrjtlFialhLgeV7WQqGtvPEHcq_9H-3_i-QMCODCaPybyxivOVw3Uoy8eX9G2ya09C7WaZfWEwv13cDiNynx8ab-lik2kruk9FNHBG9pu5yXsITskj3HfEGnMFEWZPekbvdgyj5hHnbcGE3oxGMK4S57Yx19bu2g0xVOFzp-0eIsYYaP7I0eL_SWzP_0c94To1',
@@ -62,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Good Afternoon,',
                             style: theme.textTheme.labelMedium?.copyWith(
-                              color: AppColors.textSecondaryLight,
+                              color: AppColors.textSecondary,
                             ),
                           ),
                           Text(
@@ -77,11 +73,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey.shade800 : Colors.white,
+                      color: Colors.white,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withAlpha(5),
+                          color: Colors.black.withAlpha(10),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -166,81 +162,62 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   const SizedBox(height: AppDimensions.lg),
                                   GestureDetector(
-                                        onTap: () {
-                                          context.go('/capture');
-                                        },
-                                        child: ClipRRect(
+                                    onTap: () {
+                                      context.go('/capture');
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                        AppDimensions.radiusMax,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: AppDimensions.md,
+                                          horizontal: AppDimensions.lg,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white, // solid opaque
                                           borderRadius: BorderRadius.circular(
                                             AppDimensions.radiusMax,
                                           ),
-                                          child: BackdropFilter(
-                                            filter: ImageFilter.blur(
-                                              sigmaX: 10,
-                                              sigmaY: 10,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withAlpha(20),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 4),
                                             ),
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    vertical: AppDimensions.md,
-                                                    horizontal:
-                                                        AppDimensions.lg,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white.withAlpha(
-                                                  51,
-                                                ), // 0.2 opacity
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      AppDimensions.radiusMax,
-                                                    ),
-                                                border: Border.all(
-                                                  color: Colors.white.withAlpha(
-                                                    51,
-                                                  ),
-                                                ),
+                                          ],
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: const BoxDecoration(
+                                                color: AppColors.primary,
+                                                shape: BoxShape.circle,
                                               ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: AppColors.primary,
-                                                      shape: BoxShape.circle,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: AppColors
-                                                              .primary
-                                                              .withAlpha(153),
-                                                          blurRadius: 15,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: const Icon(
-                                                      LucideIcons.scanLine,
-                                                      color: AppColors
-                                                          .textMainLight,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: AppDimensions.md,
-                                                  ),
-                                                  const Text(
-                                                    'Start Scanning',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ],
+                                              child: const Icon(
+                                                LucideIcons.scanLine,
+                                                color: AppColors.textOnPrimary,
                                               ),
                                             ),
-                                          ),
+                                            const SizedBox(
+                                              width: AppDimensions.md,
+                                            ),
+                                            const Text(
+                                              'Start Scanning',
+                                              style: TextStyle(
+                                                color: AppColors.textPrimary,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -302,7 +279,7 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(width: AppDimensions.md),
                       itemBuilder: (context, index) {
                         final recipe = MockData.recipes[index];
-                        return _buildRecipeCard(theme, isDark, recipe);
+                        return _buildRecipeCard(theme, recipe);
                       },
                     ),
                   ),
@@ -312,19 +289,15 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(isDark),
+      bottomNavigationBar: _buildBottomNav(),
     );
   }
 
-  Widget _buildRecipeCard(
-    ThemeData theme,
-    bool isDark,
-    Map<String, dynamic> recipe,
-  ) {
+  Widget _buildRecipeCard(ThemeData theme, Map<String, dynamic> recipe) {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
@@ -355,37 +328,40 @@ class _HomePageState extends State<HomePage> {
                   Positioned(
                     top: AppDimensions.sm,
                     right: AppDimensions.sm,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.radiusMax,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
                       ),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          color: isDark
-                              ? Colors.black.withAlpha(150)
-                              : Colors.white.withAlpha(230),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                LucideIcons.clock,
-                                size: 14,
-                                color: Colors.orange,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                recipe['time'],
-                                style: theme.textTheme.labelSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                      decoration: BoxDecoration(
+                        color: AppColors.surface,
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusMax,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(10),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            LucideIcons.clock,
+                            size: 14,
+                            color: Colors.orange,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            recipe['time'],
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -429,9 +405,7 @@ class _HomePageState extends State<HomePage> {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? Colors.grey.shade800
-                                : Colors.grey.shade100,
+                            color: AppColors.surfaceVariant,
                             borderRadius: BorderRadius.circular(
                               AppDimensions.radiusMax,
                             ),
@@ -441,9 +415,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: isDark
-                                  ? Colors.grey.shade300
-                                  : Colors.grey.shade600,
+                              color: AppColors.textSecondary,
                             ),
                           ),
                         ),
@@ -458,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                         icon: const Icon(
                           LucideIcons.arrowRight,
                           size: 20,
-                          color: AppColors.textMainLight,
+                          color: AppColors.textOnPrimary,
                         ),
                         onPressed: () {
                           // mock navigation to recipe details
@@ -476,79 +448,62 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBottomNav(bool isDark) {
+  Widget _buildBottomNav() {
     return Container(
       decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.surfaceDark.withAlpha(230)
-            : Colors.white.withAlpha(230),
-        border: Border(
-          top: BorderSide(
-            color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-          ),
-        ),
+        color: AppColors.surface,
+        border: Border(top: BorderSide(color: AppColors.surfaceBorder)),
       ),
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              if (index == _currentIndex) return;
-              switch (index) {
-                case 0:
-                  // Already on Home
-                  break;
-                case 1:
-                  context.push('/capture');
-                  return;
-                case 2:
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Saved recipes coming soon!'),
-                      duration: Duration(seconds: 1),
-                    ),
-                  );
-                  return;
-                case 3:
-                  context.push('/settings');
-                  return;
-              }
-              setState(() => _currentIndex = index);
-            },
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: AppColors.primary,
-            unselectedItemColor: Colors.grey.shade500,
-            selectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 10,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 10,
-            ),
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(LucideIcons.scan),
-                label: 'Scan',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(LucideIcons.bookmark),
-                label: 'Saved',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(LucideIcons.user),
-                label: 'Profile',
-              ),
-            ],
-          ),
+      child: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          if (index == _currentIndex) return;
+          switch (index) {
+            case 0:
+              // Already on Home
+              break;
+            case 1:
+              context.push('/capture');
+              return;
+            case 2:
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Saved recipes coming soon!'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+              return;
+            case 3:
+              context.push('/profile');
+              return;
+          }
+          setState(() => _currentIndex = index);
+        },
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.textMuted,
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 10,
         ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 10,
+        ),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(LucideIcons.scan), label: 'Scan'),
+          BottomNavigationBarItem(
+            icon: Icon(LucideIcons.bookmark),
+            label: 'Saved',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(LucideIcons.user),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

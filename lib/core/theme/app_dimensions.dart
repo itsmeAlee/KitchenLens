@@ -18,7 +18,7 @@ class AppDimensions {
   static const double radiusLg = 32.0; // 2rem
   static const double radiusXl = 48.0; // 3rem
   static const double radiusMax = 9999.0; // 9999px (pill)
-  
+
   // Legacy aliases
   static const double borderRadiusMd = radiusMd;
   static const double borderRadiusFull = radiusMax;

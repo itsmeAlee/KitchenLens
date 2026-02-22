@@ -78,18 +78,11 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    
-    final bgDark = const Color(0xFF112116);
-    final bgLight = const Color(0xFFF6F8F6);
-    final surfaceDark = const Color(0xFF1E2D24);
-    
     // Estimate time left
     final timeLeft = (10 - (_progress * 10)).ceil();
 
     return Scaffold(
-      backgroundColor: isDark ? bgDark : bgLight,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -100,11 +93,11 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                 children: [
                   IconButton(
                     style: IconButton.styleFrom(
-                      backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                      backgroundColor: AppColors.surfaceVariant,
                     ),
                     icon: Icon(
                       Icons.close,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                     ),
                     onPressed: () {
                       if (context.canPop()) {
@@ -124,7 +117,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           letterSpacing: -0.2,
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ),
@@ -144,15 +137,14 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                     // Hero Animation Placeholder
                     Container(
                       decoration: BoxDecoration(
-                        color: isDark ? surfaceDark : Colors.white,
+                        color: AppColors.surface,
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
-                          if (!isDark)
-                            BoxShadow(
-                              color: Colors.black.withAlpha(12),
-                              blurRadius: 20,
-                              offset: const Offset(0, 4),
-                            ),
+                          BoxShadow(
+                            color: Colors.black.withAlpha(12),
+                            blurRadius: 20,
+                            offset: const Offset(0, 4),
+                          ),
                         ],
                       ),
                       child: AspectRatio(
@@ -168,9 +160,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                                   gradient: LinearGradient(
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
-                                    colors: isDark 
-                                        ? [AppColors.primary.withAlpha(25), AppColors.primary.withAlpha(12)]
-                                        : [AppColors.primary.withAlpha(12), AppColors.primary.withAlpha(50)],
+                                    colors: [AppColors.primary.withAlpha(12), AppColors.primary.withAlpha(50)],
                                   ),
                                 ),
                               ),
@@ -179,7 +169,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                                 opacity: 0.8,
                                 child: ColorFiltered(
                                   colorFilter: ColorFilter.mode(
-                                    isDark ? Colors.black.withAlpha(150) : AppColors.primary.withAlpha(50),
+                                    AppColors.primary.withAlpha(50),
                                     BlendMode.multiply,
                                   ),
                                   child: CachedNetworkImage(
@@ -237,37 +227,38 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                               Positioned(
                                 bottom: 16,
                                 right: 16,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(999),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        color: isDark ? Colors.black.withAlpha(150) : Colors.white.withAlpha(230),
-                                        borderRadius: BorderRadius.circular(999),
-                                        border: Border.all(color: AppColors.primary.withAlpha(50)),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.surface,
+                                    borderRadius: BorderRadius.circular(999),
+                                    border: Border.all(color: AppColors.primary.withAlpha(50)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withAlpha(10),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
                                       ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Icon(
-                                            Icons.sync,
-                                            size: 16,
-                                            color: AppColors.primary,
-                                          ).animate(onPlay: (controller) => controller.repeat()).rotate(duration: 2.seconds),
-                                          const SizedBox(width: 4),
-                                          const Text(
-                                            'Scanning',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.primary,
-                                            ),
-                                          ),
-                                        ],
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.sync,
+                                        size: 16,
+                                        color: AppColors.primary,
+                                      ).animate(onPlay: (controller) => controller.repeat()).rotate(duration: 2.seconds),
+                                      const SizedBox(width: 4),
+                                      const Text(
+                                        'Scanning',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -295,7 +286,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                                    color: AppColors.textSecondary,
                                   ),
                                 ),
                                 Text(
@@ -337,7 +328,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                           width: double.infinity,
                           padding: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
-                            color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                            color: AppColors.surfaceBorder,
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: LayoutBuilder(
@@ -367,7 +358,6 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                     Column(
                       children: [
                         _buildStep(
-                          isDark: isDark,
                           isActive: _currentStep == 0,
                           isCompleted: _currentStep > 0,
                           stepNumber: 1,
@@ -378,7 +368,6 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                         ),
                         const SizedBox(height: 16),
                         _buildStep(
-                          isDark: isDark,
                           isActive: _currentStep == 1,
                           isCompleted: _currentStep > 1,
                           stepNumber: 2,
@@ -389,7 +378,6 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                         ),
                         const SizedBox(height: 16),
                         _buildStep(
-                          isDark: isDark,
                           isActive: _currentStep >= 2,
                           isCompleted: _currentStep > 2,
                           stepNumber: 3,
@@ -413,9 +401,9 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: [
-                    isDark ? bgDark : bgLight,
-                    isDark ? bgDark.withAlpha(240) : bgLight.withAlpha(240),
-                    isDark ? bgDark.withAlpha(0) : bgLight.withAlpha(0),
+                    AppColors.background,
+                    AppColors.background.withAlpha(240),
+                    AppColors.background.withAlpha(0),
                   ],
                 ),
               ),
@@ -430,8 +418,8 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0),
-                      foregroundColor: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF334155),
+                      backgroundColor: AppColors.surfaceVariant,
+                      foregroundColor: AppColors.textPrimary,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(
@@ -452,7 +440,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                     "We'll notify you when your recipes are ready.",
                     style: TextStyle(
                       fontSize: 12,
-                      color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                      color: AppColors.textSecondary,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -466,7 +454,6 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
   }
 
   Widget _buildStep({
-    required bool isDark,
     required bool isActive,
     required bool isCompleted,
     required int stepNumber,
@@ -477,175 +464,152 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
   }) {
     if (isCompleted) {
       // Completed Step
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF1E2D24).withAlpha(180) : Colors.white.withAlpha(180),
-              borderRadius: BorderRadius.circular(24),
-              border: Border(
-                left: const BorderSide(color: AppColors.primary, width: 4),
-                top: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-                right: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-                bottom: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-              ),
-              boxShadow: [
-                if (!isDark)
-                  BoxShadow(
-                    color: Colors.black.withAlpha(5),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withAlpha(75),
-                        blurRadius: 15,
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                  child: const Icon(Icons.check, color: Colors.white, size: 18),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
-                        ),
-                      ),
-                      Text(
-                        subtitle,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(24),
+          border: Border(
+            left: const BorderSide(color: AppColors.primary, width: 4),
+            top: BorderSide(color: AppColors.surfaceBorder),
+            right: BorderSide(color: AppColors.surfaceBorder),
+            bottom: BorderSide(color: AppColors.surfaceBorder),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(5),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withAlpha(75),
+                    blurRadius: 15,
+                  ),
+                ],
+              ),
+              alignment: Alignment.center,
+              child: const Icon(Icons.check, color: Colors.white, size: 18),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       );
     } else if (isActive) {
       // Active Step
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Stack(
-            children: [
-              // Pulse background
-              Positioned.fill(
-                child: Container(
-                  color: isDark ? AppColors.primary.withAlpha(25) : AppColors.primary.withAlpha(12),
-                ).animate(onPlay: (controller) => controller.repeat(reverse: true)).fade(begin: 0.5, end: 1.0, duration: 1.5.seconds),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border(
-                    left: const BorderSide(color: AppColors.primary, width: 4),
-                    top: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-                    right: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-                    bottom: BorderSide(color: Colors.white.withAlpha(isDark ? 12 : 128)),
-                  ),
-                  boxShadow: [
-                    if (!isDark)
-                      BoxShadow(
-                        color: Colors.black.withAlpha(10),
-                        blurRadius: 15,
-                        offset: const Offset(0, 4),
-                      ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E293B) : Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.primary, width: 2),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withAlpha(75),
-                            blurRadius: 15,
-                          ),
-                        ],
-                      ),
-                      alignment: Alignment.center,
-                      child: const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                          strokeWidth: 2,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
-                            ),
-                          ),
-                          Text(
-                            activeSubtitle,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      // Pending Step
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E293B).withAlpha(75) : const Color(0xFFF8FAFC).withAlpha(128),
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(24),
+          border: Border(
+            left: const BorderSide(color: AppColors.primary, width: 4),
+            top: BorderSide(color: AppColors.surfaceBorder),
+            right: BorderSide(color: AppColors.surfaceBorder),
+            bottom: BorderSide(color: AppColors.surfaceBorder),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(10),
+              blurRadius: 15,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                border: Border.all(color: AppColors.primary, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withAlpha(75),
+                    blurRadius: 15,
+                  ),
+                ],
+              ),
+              alignment: Alignment.center,
+              child: const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  Text(
+                    activeSubtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // Inactive/Future Step
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.backgroundAlt,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+            color: AppColors.surfaceBorder,
           ),
         ),
         child: Row(
@@ -656,7 +620,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                  color: AppColors.surfaceBorder,
                   width: 2,
                 ),
               ),
@@ -666,7 +630,7 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+                  color: AppColors.textMuted,
                 ),
               ),
             ),
@@ -680,14 +644,14 @@ class _ProcessingPageState extends State<ProcessingPage> with TickerProviderStat
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                   Text(
                     subtitle,
                     style: TextStyle(
                       fontSize: 12,
-                      color: isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8),
+                      color: AppColors.textMuted,
                     ),
                   ),
                 ],

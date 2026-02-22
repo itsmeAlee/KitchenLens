@@ -1,0 +1,133 @@
+Analyzing KitchenLens...
+
+  error - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:82:43 - The getter 'backgroundDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundDark', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundDark'. - undefined_getter
+  error - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:301:43 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\cook_mode\presentation\pages\cook_mode_page.dart:388:41 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\home\presentation\pages\home_page.dart:216:51 - Expected to find ']'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:217:49 - Expected to find ')'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:220:43 - Expected to find ']'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:223:33 - Expected to find ')'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:229:21 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:229:22 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:229:22 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:229:22 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:230:19 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:230:19 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:230:21 - The static method or constructor 'animate' isn't defined for the context type '_'. Try correcting the name to the name of an existing static method or constructor, or defining a static method or constructor named 'animate'. - dot_shorthand_undefined_member
+  error - lib\features\home\presentation\pages\home_page.dart:230:77 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:230:78 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:230:78 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:232:58 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:232:59 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:232:59 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:268:51 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:268:52 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:268:52 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:269:58 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:269:59 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:269:59 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:287:19 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:287:20 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:287:20 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:287:20 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:288:17 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:288:17 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:288:17 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:288:18 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:288:18 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:288:18 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:289:15 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:289:15 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:289:15 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:289:16 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:289:16 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:289:16 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:290:13 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:290:13 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:290:13 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:290:14 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:290:14 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:290:14 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:291:11 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:291:11 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:291:11 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:291:12 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:291:12 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:291:12 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:292:9 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:292:9 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:292:9 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:292:10 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:292:10 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:292:10 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:293:7 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:293:7 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:293:7 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:293:8 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:293:8 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:294:44 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:294:45 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:294:45 - Expected to find ';'. - expected_token
+  error - lib\features\home\presentation\pages\home_page.dart:294:45 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\home\presentation\pages\home_page.dart:295:5 - Expected an identifier. - missing_identifier
+  error - lib\features\home\presentation\pages\home_page.dart:295:5 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:135:13 - Expected to find ']'. - expected_token
+  error - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:136:13 - Too many positional arguments: 0 expected, but 11 found. Try removing the extra positional arguments, or specifying the name for named arguments. - extra_positional_arguments_could_be_named
+  error - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:176:28 - Undefined name 'isDark'. Try correcting the name to one that is defined, or defining the name. - undefined_identifier
+  error - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:185:28 - Undefined name 'isDark'. Try correcting the name to one that is defined, or defining the name. - undefined_identifier
+  error - lib\features\onboarding\presentation\widgets\step_one_welcome.dart:226:11 - Expected to find ')'. - expected_token
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:38:33 - The getter 'backgroundDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundDark', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundDark'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:39:33 - The getter 'backgroundLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundLight', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundLight'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:76:49 - The getter 'backgroundDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundDark', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundDark'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:77:49 - The getter 'backgroundLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundLight', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundLight'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:106:45 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:299:45 - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceVariantDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceVariantDark'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:377:43 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\recipes\presentation\pages\recipe_detail_page.dart:433:60 - The getter 'textSecondaryLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'textSecondaryLight', correcting the name to the name of an existing getter, or defining a getter or field named 'textSecondaryLight'. - undefined_getter
+  error - lib\features\scan\presentation\pages\capture_page.dart:130:39 - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\scan\presentation\pages\capture_page.dart:163:39 - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\scan\presentation\pages\capture_page.dart:206:47 - The argument type 'Object' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\scan\presentation\pages\capture_page.dart:255:25 - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\scan\presentation\pages\processing_page.dart:456:10 - The body might complete normally, causing 'null' to be returned, but the return type, 'Widget', is a potentially non-nullable type. Try adding either a return or a throw statement at the end. - body_might_complete_normally
+  error - lib\features\scan\presentation\pages\processing_page.dart:529:11 - Expected to find ';'. - expected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:529:12 - Expected an identifier. - missing_identifier
+  error - lib\features\scan\presentation\pages\processing_page.dart:529:12 - Expected to find ';'. - expected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:529:12 - Unexpected text ','. Try removing the text. - unexpected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:530:9 - Expected an identifier. - missing_identifier
+  error - lib\features\scan\presentation\pages\processing_page.dart:530:9 - Expected to find ';'. - expected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:530:9 - Unexpected text ')'. Try removing the text. - unexpected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:530:10 - Expected an identifier. - missing_identifier
+  error - lib\features\scan\presentation\pages\processing_page.dart:530:10 - Unexpected text ','. Try removing the text. - unexpected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:602:15 - Expected to find ';'. - expected_token
+  error - lib\features\scan\presentation\pages\processing_page.dart:602:16 - Expected an identifier. - missing_identifier
+  error - lib\features\scan\presentation\pages\processing_page.dart:602:16 - Unexpected text ','. Try removing the text. - unexpected_token
+  error - lib\features\scan\presentation\pages\upload_page.dart:138:51 - Invalid constant value. - invalid_constant
+  error - lib\features\scan\presentation\pages\upload_page.dart:138:61 - The getter 'textSecondaryLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'textSecondaryLight', correcting the name to the name of an existing getter, or defining a getter or field named 'textSecondaryLight'. - undefined_getter
+  error - lib\features\scan\presentation\pages\upload_page.dart:152:29 - The getter 'textSecondaryLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'textSecondaryLight', correcting the name to the name of an existing getter, or defining a getter or field named 'textSecondaryLight'. - undefined_getter
+  error - lib\features\scan\presentation\pages\upload_page.dart:227:23 - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\scan\presentation\pages\upload_page.dart:240:19 - A value of type 'double' can't be assigned to a parameter of type 'BorderRadiusGeometry?' in a const constructor. Try using a subtype, or removing the keyword 'const'. - const_constructor_param_type_mismatch
+  error - lib\features\scan\presentation\pages\upload_page.dart:240:33 - The argument type 'double' can't be assigned to the parameter type 'BorderRadiusGeometry?'.  - argument_type_not_assignable
+  error - lib\features\settings\presentation\pages\settings_page.dart:30:25 - The getter 'backgroundDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundDark', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundDark'. - undefined_getter
+  error - lib\features\settings\presentation\pages\settings_page.dart:31:25 - The getter 'backgroundLight' isn't defined for the type 'AppColors'. Try importing the library that defines 'backgroundLight', correcting the name to the name of an existing getter, or defining a getter or field named 'backgroundLight'. - undefined_getter
+  error - lib\features\settings\presentation\pages\settings_page.dart:210:35 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\settings\presentation\pages\settings_page.dart:213:37 - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceVariantDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceVariantDark'. - undefined_getter
+  error - lib\features\settings\presentation\pages\settings_page.dart:248:35 - The getter 'surfaceDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceDark'. - undefined_getter
+  error - lib\features\settings\presentation\pages\settings_page.dart:251:37 - The getter 'surfaceVariantDark' isn't defined for the type 'AppColors'. Try importing the library that defines 'surfaceVariantDark', correcting the name to the name of an existing getter, or defining a getter or field named 'surfaceVariantDark'. - undefined_getter
+warning - lib\features\home\presentation\pages\home_page.dart:229:22 - Dead code. Try removing the code, or fixing the code before it so that it can be reached. - dead_code
+warning - lib\features\home\presentation\pages\home_page.dart:294:7 - The label 'bottomNavigationBar' isn't used. Try removing the label, or using it in either a 'break' or 'continue' statement. - unused_label
+warning - lib\features\scan\presentation\pages\capture_page.dart:31:8 - The declaration '_toggleMode' isn't referenced. Try removing the declaration of '_toggleMode'. - unused_element
+warning - lib\features\scan\presentation\pages\processing_page.dart:529:12 - Dead code. Try removing the code, or fixing the code before it so that it can be reached. - dead_code
+   info - lib\features\auth\presentation\pages\auth_page.dart:1:8 - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive. - unnecessary_import
+   info - lib\features\auth\presentation\pages\login_page.dart:65:46 - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement. - deprecated_member_use
+   info - lib\features\home\presentation\pages\home_page.dart:1:8 - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive. - unnecessary_import
+   info - lib\features\home\presentation\pages\home_page.dart:295:6 - Unnecessary empty statement. Try removing the empty statement or restructuring the code. - empty_statements
+   info - lib\features\ingredients\presentation\pages\ingredients_review_page.dart:1:8 - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive. - unnecessary_import
+   info - lib\features\scan\presentation\pages\capture_page.dart:100:54 - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement. - deprecated_member_use
+   info - lib\features\scan\presentation\pages\capture_page.dart:235:31 - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement. - deprecated_member_use
+   info - lib\features\scan\presentation\pages\processing_page.dart:2:8 - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive. - unnecessary_import
+   info - lib\features\scan\presentation\pages\upload_page.dart:182:44 - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement. - deprecated_member_use
+   info - lib\features\scan\presentation\pages\upload_page.dart:197:44 - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement. - deprecated_member_use
+   info - lib\features\scan_result\presentation\pages\scan_result_page.dart:1:8 - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'. Try removing the import directive. - unnecessary_import
+   info - lib\features\scan_result\presentation\pages\scan_result_page.dart:110:49 - Unnecessary use of multiple underscores. Try using '_'. - unnecessary_underscores
+
+129 issues found.

@@ -22,7 +22,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       body: Stack(
@@ -34,9 +33,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               SliverAppBar(
                 expandedHeight: 350,
                 pinned: true,
-                backgroundColor: isDark
-                    ? AppColors.backgroundDark
-                    : AppColors.backgroundLight,
+                backgroundColor: AppColors.background,
                 leading: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: _buildGlassButton(
@@ -72,9 +69,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                             gradient: LinearGradient(
                               colors: [
                                 Colors.transparent,
-                                isDark
-                                    ? AppColors.backgroundDark
-                                    : AppColors.backgroundLight,
+                                AppColors.background,
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -102,15 +97,13 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                         child: Container(
                           padding: const EdgeInsets.all(AppDimensions.lg),
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.surfaceDark
-                                : Colors.white,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(
                               AppDimensions.radiusLg,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withAlpha(isDark ? 50 : 20),
+                                color: Colors.black.withAlpha(20),
                                 blurRadius: 20,
                                 offset: const Offset(0, 10),
                               ),
@@ -142,27 +135,33 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                                     ),
                                   ),
                                   const SizedBox(width: AppDimensions.sm),
-                                  ...(recipe['tags'] as List? ?? []).take(2).map((tag) => Container(
-                                    margin: const EdgeInsets.only(right: 6),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange.withAlpha(51),
-                                      borderRadius: BorderRadius.circular(
-                                        AppDimensions.radiusMax,
+                                  ...(recipe['tags'] as List? ?? [])
+                                      .take(2)
+                                      .map(
+                                        (tag) => Container(
+                                          margin: const EdgeInsets.only(
+                                            right: 6,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.orange.withAlpha(51),
+                                            borderRadius: BorderRadius.circular(
+                                              AppDimensions.radiusMax,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            tag,
+                                            style: const TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    child: Text(
-                                      tag,
-                                      style: const TextStyle(
-                                        color: Colors.orange,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )),
                                 ],
                               ),
                               const SizedBox(height: AppDimensions.md),
@@ -177,25 +176,21 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                                 children: [
                                   _buildStatItem(
                                     theme,
-                                    isDark,
                                     LucideIcons.clock,
                                     recipe['prepTime'] ?? '10m',
                                   ),
                                   _buildStatItem(
                                     theme,
-                                    isDark,
                                     LucideIcons.flame,
                                     recipe['cookTime'] ?? '15m',
                                   ),
                                   _buildStatItem(
                                     theme,
-                                    isDark,
                                     LucideIcons.chartBar,
                                     recipe['calories'] ?? '420 kcal',
                                   ),
                                   _buildStatItem(
                                     theme,
-                                    isDark,
                                     LucideIcons.users,
                                     '${recipe['servings'] ?? 2}',
                                   ),
@@ -212,29 +207,24 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                         style: theme.textTheme.titleLarge,
                       ).animate().fadeIn(delay: 100.ms),
                       const SizedBox(height: AppDimensions.md),
-                      ...List.generate(
-                        (recipe['ingredients'] as List).length,
-                        (index) {
-                          final ingredient = recipe['ingredients'][index] as Map<String, dynamic>;
-                          return Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: AppDimensions.sm,
-                                  ),
-                                  child: _buildIngredientItem(
-                                    theme,
-                                    isDark,
-                                    ingredient,
-                                  ),
-                                )
-                                .animate()
-                                .fadeIn(
-                                  delay: Duration(
-                                    milliseconds: 200 + (index * 50),
-                                  ),
-                                )
-                                .slideX(begin: 0.1);
-                        },
-                      ),
+                      ...List.generate((recipe['ingredients'] as List).length, (
+                        index,
+                      ) {
+                        final ingredient =
+                            recipe['ingredients'][index]
+                                as Map<String, dynamic>;
+                        return Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: AppDimensions.sm,
+                              ),
+                              child: _buildIngredientItem(theme, ingredient),
+                            )
+                            .animate()
+                            .fadeIn(
+                              delay: Duration(milliseconds: 200 + (index * 50)),
+                            )
+                            .slideX(begin: 0.1);
+                      }),
                       const SizedBox(height: AppDimensions.xl),
 
                       // Instructions Section
@@ -246,41 +236,50 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                       ...List.generate(
                         (recipe['instructions'] as List).length,
                         (index) {
-                          final instruction = recipe['instructions'][index] as String;
+                          final instruction =
+                              recipe['instructions'][index] as String;
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 28,
-                                  height: 28,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary.withAlpha(25),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: TextStyle(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 28,
+                                      height: 28,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary.withAlpha(25),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '${index + 1}',
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        instruction,
+                                        style: const TextStyle(
+                                          height: 1.6,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    instruction,
-                                    style: const TextStyle(height: 1.6, fontSize: 16),
-                                  ),
+                              )
+                              .animate()
+                              .fadeIn(
+                                delay: Duration(
+                                  milliseconds: 350 + (index * 60),
                                 ),
-                              ],
-                            ),
-                          ).animate().fadeIn(
-                            delay: Duration(milliseconds: 350 + (index * 60)),
-                          ).slideX(begin: 0.05);
+                              )
+                              .slideX(begin: 0.05);
                         },
                       ),
 
@@ -295,9 +294,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                           duration: const Duration(milliseconds: 300),
                           padding: const EdgeInsets.all(AppDimensions.md),
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.surfaceVariantDark.withAlpha(128)
-                                : AppColors.primary.withAlpha(15),
+                            color: AppColors.primary.withAlpha(15),
                             borderRadius: BorderRadius.circular(
                               AppDimensions.radiusMd,
                             ),
@@ -340,11 +337,10 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                               if (_isChefReasoningExpanded) ...[
                                 const SizedBox(height: AppDimensions.md),
                                 Text(
-                                  recipe['reasoning'] ?? 'This recipe was selected because it perfectly utilizes your scanned ingredients.',
+                                  recipe['reasoning'] ??
+                                      'This recipe was selected because it perfectly utilizes your scanned ingredients.',
                                   style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: isDark
-                                        ? Colors.grey.shade300
-                                        : Colors.grey.shade800,
+                                    color: AppColors.textSecondary,
                                   ),
                                 ).animate().fadeIn(),
                               ],
@@ -374,7 +370,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                 AppDimensions.md + MediaQuery.of(context).padding.bottom,
               ),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceDark : Colors.white,
+                color: AppColors.surface,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withAlpha(10),
@@ -419,31 +415,25 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     );
   }
 
-  Widget _buildStatItem(
-    ThemeData theme,
-    bool isDark,
-    IconData icon,
-    String text,
-  ) {
+  Widget _buildStatItem(ThemeData theme, IconData icon, String text) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 16,
-          color: isDark ? Colors.grey.shade400 : AppColors.textSecondaryLight,
-        ),
+        Icon(icon, size: 16, color: AppColors.textSecondary),
         const SizedBox(width: 4),
         Text(
           text,
           style: theme.textTheme.labelMedium?.copyWith(
-            color: isDark ? Colors.grey.shade300 : Colors.grey.shade800,
+            color: AppColors.textSecondary,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildIngredientItem(ThemeData theme, bool isDark, Map<String, dynamic> ingredient) {
+  Widget _buildIngredientItem(
+    ThemeData theme,
+    Map<String, dynamic> ingredient,
+  ) {
     return Row(
       children: [
         Container(

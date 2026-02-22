@@ -14,20 +14,42 @@ class ScanResultPage extends StatefulWidget {
 
 class _ScanResultPageState extends State<ScanResultPage> {
   final List<Map<String, dynamic>> _ingredients = [
-    {'name': 'Salmon', 'emoji': '🐟', 'bg': const Color(0xFFFFF7ED), 'border': const Color(0xFFFFEDD5), 'darkBg': const Color(0x337C2D12), 'darkBorder': const Color(0x807C2D12)},
-    {'name': 'Broccoli', 'emoji': '🥦', 'bg': const Color(0xFFF0FDF4), 'border': const Color(0xFFDCFCE7), 'darkBg': const Color(0x3314532D), 'darkBorder': const Color(0x8014532D)},
-    {'name': 'Lemon', 'emoji': '🍋', 'bg': const Color(0xFFFEFCE8), 'border': const Color(0xFFFEF08A), 'darkBg': const Color(0x33713F12), 'darkBorder': const Color(0x80713F12)},
-    {'name': 'Garlic', 'emoji': '🧄', 'bg': const Color(0xFFFEF2F2), 'border': const Color(0xFFFEE2E2), 'darkBg': const Color(0x337F1D1D), 'darkBorder': const Color(0x807F1D1D)},
-    {'name': 'Butter', 'emoji': '🧈', 'bg': const Color(0xFFF8FAFC), 'border': const Color(0xFFE2E8F0), 'darkBg': const Color(0xFF1E293B), 'darkBorder': const Color(0xFF334155)},
+    {
+      'name': 'Salmon',
+      'emoji': '🐟',
+      'bg': const Color(0xFFFFF7ED),
+      'border': const Color(0xFFFFEDD5),
+    },
+    {
+      'name': 'Broccoli',
+      'emoji': '🥦',
+      'bg': const Color(0xFFF0FDF4),
+      'border': const Color(0xFFDCFCE7),
+    },
+    {
+      'name': 'Lemon',
+      'emoji': '🍋',
+      'bg': const Color(0xFFFEFCE8),
+      'border': const Color(0xFFFEF08A),
+    },
+    {
+      'name': 'Garlic',
+      'emoji': '🧄',
+      'bg': const Color(0xFFFEF2F2),
+      'border': const Color(0xFFFEE2E2),
+    },
+    {
+      'name': 'Butter',
+      'emoji': '🧈',
+      'bg': const Color(0xFFF8FAFC),
+      'border': const Color(0xFFE2E8F0),
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF112116) : const Color(0xFFF6F8F6),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -37,22 +59,22 @@ class _ScanResultPageState extends State<ScanResultPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildIconButton(isDark, Icons.arrow_back, () {
+                  _buildIconButton(Icons.arrow_back, () {
                     if (context.canPop()) {
                       context.pop();
                     } else {
                       context.go('/home');
                     }
                   }),
-                  Text(
+                  const Text(
                     'Scan Results',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                  _buildIconButton(isDark, Icons.more_horiz, () {}),
+                  _buildIconButton(Icons.more_horiz, () {}),
                 ],
               ),
             ),
@@ -89,10 +111,10 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                 const SizedBox(width: 8),
                                 Text(
                                   'Found ${_ingredients.length} Ingredients',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A),
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ],
@@ -102,7 +124,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
                       ).animate().fadeIn().slideY(begin: 0.1),
 
                       const SizedBox(height: 16),
-                      
+
                       SizedBox(
                         height: 100,
                         child: ListView.separated(
@@ -110,50 +132,57 @@ class _ScanResultPageState extends State<ScanResultPage> {
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           itemCount: _ingredients.length,
-                          separatorBuilder: (_, __) => const SizedBox(width: 12),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 12),
                           itemBuilder: (context, index) {
                             final ing = _ingredients[index];
                             return Column(
-                              children: [
-                                Container(
-                                  height: 64,
-                                  width: 64,
-                                  decoration: BoxDecoration(
-                                    color: isDark ? ing['darkBg'] : ing['bg'],
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: isDark ? ing['darkBorder'] : ing['border'],
-                                    ),
-                                    boxShadow: [
-                                      if (!isDark)
-                                        BoxShadow(
-                                          color: Colors.black.withAlpha(10),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 2),
+                                  children: [
+                                    Container(
+                                      height: 64,
+                                      width: 64,
+                                      decoration: BoxDecoration(
+                                        color: ing['bg'] as Color,
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: ing['border'] as Color,
                                         ),
-                                    ],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withAlpha(10),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        ing['emoji'] as String,
+                                        style: const TextStyle(fontSize: 30),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      ing['name'] as String,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                .animate()
+                                .fadeIn(
+                                  delay: Duration(
+                                    milliseconds: 100 + (index * 50),
                                   ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    ing['emoji'] as String,
-                                    style: const TextStyle(fontSize: 30),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  ing['name'] as String,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF475569),
-                                  ),
-                                ),
-                              ],
-                            ).animate().fadeIn(delay: Duration(milliseconds: 100 + (index * 50))).scale(begin: const Offset(0.9, 0.9));
+                                )
+                                .scale(begin: const Offset(0.9, 0.9));
                           },
                         ),
                       ),
-                      
+
                       const SizedBox(height: 16),
 
                       // Top Match Section
@@ -162,16 +191,20 @@ class _ScanResultPageState extends State<ScanResultPage> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 16,
+                              ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Top Match',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A),
+                                      color: AppColors.textPrimary,
                                     ),
                                   ),
                                   const Text(
@@ -191,7 +224,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                 borderRadius: BorderRadius.circular(40),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withAlpha(isDark ? 50 : 25),
+                                    color: Colors.black.withAlpha(25),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -205,7 +238,8 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                     fit: StackFit.expand,
                                     children: [
                                       CachedNetworkImage(
-                                        imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCN6H_3ND6yDxjsUOUc-o4BDo3zVaQpcTQJv60cHg4K28sQCMJzbJOzVmzehuA-C3PgC5I2TcYwlYWP10KRnGtpJybISu0O9khP_hrBgoaX9_1sIdAc0rtefSoZ72xJpX3iZKJ4AiUFzN0HttF_ZY45m7gEe0crA51USd_ZGvj_x0_1OC5lCu3GMTVGBMZb6tzHZneKGVmuArgVY_hd1JnoHqZid_tZ1aCJrkVqPRn18QN6d9VBjP_13O_llOpZdnvhponxndyWOgGu',
+                                        imageUrl:
+                                            'https://lh3.googleusercontent.com/aida-public/AB6AXuCN6H_3ND6yDxjsUOUc-o4BDo3zVaQpcTQJv60cHg4K28sQCMJzbJOzVmzehuA-C3PgC5I2TcYwlYWP10KRnGtpJybISu0O9khP_hrBgoaX9_1sIdAc0rtefSoZ72xJpX3iZKJ4AiUFzN0HttF_ZY45m7gEe0crA51USd_ZGvj_x0_1OC5lCu3GMTVGBMZb6tzHZneKGVmuArgVY_hd1JnoHqZid_tZ1aCJrkVqPRn18QN6d9VBjP_13O_llOpZdnvhponxndyWOgGu',
                                         fit: BoxFit.cover,
                                       ),
                                       Container(
@@ -226,33 +260,51 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                         left: 24,
                                         right: 24,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            _buildGlassBadge(
+                                            _buildBadge(
                                               child: Row(
                                                 children: [
                                                   Container(
-                                                    width: 8,
-                                                    height: 8,
-                                                    decoration: const BoxDecoration(
-                                                      color: AppColors.primary,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ).animate(onPlay: (controller) => controller.repeat()).fadeIn(duration: 500.ms).fadeOut(duration: 500.ms, delay: 500.ms),
+                                                        width: 8,
+                                                        height: 8,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                              color: AppColors
+                                                                  .primary,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                      )
+                                                      .animate(
+                                                        onPlay: (controller) =>
+                                                            controller.repeat(),
+                                                      )
+                                                      .fadeIn(duration: 500.ms)
+                                                      .fadeOut(
+                                                        duration: 500.ms,
+                                                        delay: 500.ms,
+                                                      ),
                                                   const SizedBox(width: 6),
                                                   const Text(
                                                     '98% Match',
                                                     style: TextStyle(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color:
+                                                          AppColors.textPrimary,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            _buildGlassIconButton(Icons.favorite),
+                                            _buildPanelIconButton(
+                                              Icons.favorite,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -262,28 +314,39 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                         right: 0,
                                         child: Padding(
                                           padding: const EdgeInsets.all(24),
-                                          child: _buildGlassPanel(
-                                            isDark: isDark,
+                                          child: _buildPanel(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Lemon Butter Pan-Seared Salmon',
                                                   style: TextStyle(
                                                     fontSize: 24,
                                                     fontWeight: FontWeight.bold,
                                                     height: 1.1,
-                                                    color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                                    color:
+                                                        AppColors.textPrimary,
                                                   ),
                                                 ),
                                                 const SizedBox(height: 16),
                                                 Row(
                                                   children: [
-                                                    _buildStatItem(isDark, Icons.schedule, '25 min'),
-                                                    _buildDot(isDark),
-                                                    _buildStatItem(isDark, Icons.bar_chart, 'Easy'),
-                                                    _buildDot(isDark),
-                                                    _buildStatItem(isDark, Icons.local_fire_department, '450 kcal'),
+                                                    _buildStatItem(
+                                                      Icons.schedule,
+                                                      '25 min',
+                                                    ),
+                                                    _buildDot(),
+                                                    _buildStatItem(
+                                                      Icons.bar_chart,
+                                                      'Easy',
+                                                    ),
+                                                    _buildDot(),
+                                                    _buildStatItem(
+                                                      Icons
+                                                          .local_fire_department,
+                                                      '450 kcal',
+                                                    ),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 20),
@@ -291,22 +354,36 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                                   width: double.infinity,
                                                   height: 56,
                                                   child: ElevatedButton.icon(
-                                                    onPressed: () => context.push('/recipe_detail'),
+                                                    onPressed: () => context
+                                                        .push('/recipe_detail'),
                                                     style: ElevatedButton.styleFrom(
-                                                      backgroundColor: AppColors.primary,
-                                                      foregroundColor: const Color(0xFF0F172A),
+                                                      backgroundColor:
+                                                          AppColors.primary,
+                                                      foregroundColor:
+                                                          const Color(
+                                                            0xFF0F172A,
+                                                          ),
                                                       elevation: 10,
-                                                      shadowColor: AppColors.primary.withAlpha(100),
+                                                      shadowColor: AppColors
+                                                          .primary
+                                                          .withAlpha(100),
                                                       shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(16),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              16,
+                                                            ),
                                                       ),
                                                     ),
-                                                    icon: const Icon(Icons.cookie, size: 24), // Fallback for skillet
+                                                    icon: const Icon(
+                                                      Icons.cookie,
+                                                      size: 24,
+                                                    ), // Fallback for skillet
                                                     label: const Text(
                                                       'Cook This',
                                                       style: TextStyle(
                                                         fontSize: 18,
-                                                        fontWeight: FontWeight.bold,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ),
@@ -335,22 +412,22 @@ class _ScanResultPageState extends State<ScanResultPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   'Other Suggestions',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
-                                    color: isDark ? const Color(0xFFF1F5F9) : const Color(0xFF0F172A),
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                                 TextButton(
                                   onPressed: () {},
-                                  child: Text(
+                                  child: const Text(
                                     'View All',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
-                                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                 ),
@@ -362,7 +439,6 @@ class _ScanResultPageState extends State<ScanResultPage> {
                               children: [
                                 Expanded(
                                   child: _buildSuggestionCard(
-                                    isDark,
                                     'Lemon Butter Pasta',
                                     '15 min • Intermediate',
                                     '85% Match',
@@ -372,7 +448,6 @@ class _ScanResultPageState extends State<ScanResultPage> {
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: _buildSuggestionCard(
-                                    isDark,
                                     'Pan-Seared Veggies',
                                     '20 min • Easy',
                                     '72% Match',
@@ -393,133 +468,130 @@ class _ScanResultPageState extends State<ScanResultPage> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(isDark),
+      bottomNavigationBar: _buildBottomNav(),
       extendBody: true,
     );
   }
 
-  Widget _buildIconButton(bool isDark, IconData icon, VoidCallback onPressed) {
+  Widget _buildIconButton(IconData icon, VoidCallback onPressed) {
     return Container(
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2E24) : Colors.white,
+        color: AppColors.surfaceVariant,
         shape: BoxShape.circle,
-        border: Border.all(
-          color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
-        ),
+        border: Border.all(color: AppColors.surfaceBorder),
         boxShadow: [
-          if (!isDark)
-            BoxShadow(
-              color: Colors.black.withAlpha(10),
-              blurRadius: 2,
-              offset: const Offset(0, 1),
-            ),
+          BoxShadow(
+            color: Colors.black.withAlpha(10),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
         ],
       ),
       child: IconButton(
-        icon: Icon(
-          icon,
-          size: 20,
-          color: isDark ? Colors.white : const Color(0xFF0F172A),
-        ),
+        icon: Icon(icon, size: 20, color: AppColors.textPrimary),
         onPressed: onPressed,
       ),
     );
   }
 
-  Widget _buildGlassBadge({required Widget child}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(9999),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withAlpha(50),
-            borderRadius: BorderRadius.circular(9999),
-            border: Border.all(color: Colors.white.withAlpha(25)),
+  Widget _buildBadge({required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(9999),
+        border: Border.all(color: AppColors.surfaceBorder),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(10),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
-          child: child,
-        ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
+  Widget _buildPanelIconButton(IconData icon) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(9999),
+        border: Border.all(color: AppColors.surfaceBorder),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(10),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: IconButton(
+        icon: Icon(icon, size: 20, color: AppColors.textSecondary),
+        onPressed: () {},
       ),
     );
   }
 
-  Widget _buildGlassIconButton(IconData icon) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(9999),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white.withAlpha(50),
-            borderRadius: BorderRadius.circular(9999),
-            border: Border.all(color: Colors.white.withAlpha(25)),
+  Widget _buildPanel({required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.surfaceBorder),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(10),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-          child: IconButton(
-            icon: Icon(icon, size: 20, color: Colors.white),
-            onPressed: () {},
-          ),
-        ),
+        ],
       ),
+      child: child,
     );
   }
 
-  Widget _buildGlassPanel({required bool isDark, required Widget child}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E2E24).withAlpha(180) : Colors.white.withAlpha(180),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withAlpha(isDark ? 25 : 75)),
-          ),
-          child: child,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatItem(bool isDark, IconData icon, String label) {
+  Widget _buildStatItem(IconData icon, String label) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 18,
-          color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
-        ),
+        Icon(icon, size: 18, color: AppColors.textSecondary),
         const SizedBox(width: 4),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF475569),
+            color: AppColors.textSecondary,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildDot(bool isDark) {
+  Widget _buildDot() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       width: 4,
       height: 4,
-      decoration: BoxDecoration(
-        color: const Color(0xFF94A3B8),
+      decoration: const BoxDecoration(
+        color: AppColors.textMuted,
         shape: BoxShape.circle,
       ),
     );
   }
 
-  Widget _buildSuggestionCard(bool isDark, String title, String subtitle, String match, String imageUrl) {
+  Widget _buildSuggestionCard(
+    String title,
+    String subtitle,
+    String match,
+    String imageUrl,
+  ) {
     return GestureDetector(
       onTap: () => context.push('/recipe_detail'),
       child: Column(
@@ -529,12 +601,11 @@ class _ScanResultPageState extends State<ScanResultPage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
-                if (!isDark)
-                  BoxShadow(
-                    color: Colors.black.withAlpha(10),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
+                BoxShadow(
+                  color: Colors.black.withAlpha(10),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
               ],
             ),
             child: AspectRatio(
@@ -544,23 +615,17 @@ class _ScanResultPageState extends State<ScanResultPage> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
                     Positioned(
                       top: 12,
                       right: 12,
-                      child: _buildGlassBadge(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                          child: Text(
-                            match,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                      child: _buildBadge(
+                        child: Text(
+                          match,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                       ),
@@ -573,11 +638,11 @@ class _ScanResultPageState extends State<ScanResultPage> {
           const SizedBox(height: 12),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               height: 1.25,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -585,10 +650,10 @@ class _ScanResultPageState extends State<ScanResultPage> {
           const SizedBox(height: 4),
           Text(
             subtitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+              color: AppColors.textSecondary,
             ),
           ),
         ],
@@ -596,39 +661,40 @@ class _ScanResultPageState extends State<ScanResultPage> {
     );
   }
 
-  Widget _buildBottomNav(bool isDark) {
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF0F172A).withAlpha(230) : Colors.white.withAlpha(230),
-            border: Border(
-              top: BorderSide(
-                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+  Widget _buildBottomNav() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(top: BorderSide(color: AppColors.surfaceBorder)),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                Icons.home,
+                'Home',
+                false,
+                () => context.go('/home'),
               ),
-            ),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', false, isDark, () => context.go('/home')),
-                  _buildNavItem(Icons.qr_code_scanner, 'Scan', true, isDark, () {}),
-                  _buildNavItem(Icons.favorite, 'Saved', false, isDark, () {}),
-                  _buildNavItem(Icons.person, 'Profile', false, isDark, () {}),
-                ],
-              ),
-            ),
+              _buildNavItem(Icons.qr_code_scanner, 'Scan', true, () {}),
+              _buildNavItem(Icons.favorite, 'Saved', false, () {}),
+              _buildNavItem(Icons.person, 'Profile', false, () {}),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isActive, bool isDark, VoidCallback onTap) {
+  Widget _buildNavItem(
+    IconData icon,
+    String label,
+    bool isActive,
+    VoidCallback onTap,
+  ) {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -647,9 +713,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
             child: Icon(
               icon,
               size: 24,
-              color: isActive
-                  ? AppColors.primary
-                  : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8)),
+              color: isActive ? AppColors.primary : AppColors.textSecondary,
             ),
           ),
           const SizedBox(height: 4),
@@ -659,9 +723,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
               fontSize: 10,
               fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
               letterSpacing: 0.5,
-              color: isActive
-                  ? (isDark ? Colors.white : const Color(0xFF0F172A))
-                  : (isDark ? const Color(0xFF64748B) : const Color(0xFF94A3B8)),
+              color: isActive ? AppColors.textPrimary : AppColors.textSecondary,
             ),
           ),
         ],

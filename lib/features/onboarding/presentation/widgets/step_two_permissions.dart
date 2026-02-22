@@ -25,7 +25,6 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return SafeArea(
       child: Padding(
@@ -47,9 +46,7 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.grey.shade700
-                          : Colors.grey.shade300,
+                      color: AppColors.surfaceVariant,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -67,9 +64,7 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.grey.shade700
-                          : Colors.grey.shade300,
+                      color: AppColors.surfaceVariant,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -78,16 +73,40 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
             ),
 
             // Header Content
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: AppColors.primaryLight,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.verified_user_outlined,
+                size: 32,
+                color: AppColors.primary,
+              ),
+            ).animate().scale(delay: 200.ms, begin: const Offset(0.5, 0.5)),
+            const SizedBox(height: 24),
             Text(
-              'System Access',
-              style: theme.textTheme.displaySmall,
-            ).animate().fadeIn().slideY(begin: 0.1),
-            const SizedBox(height: AppDimensions.sm),
-            Text(
-              'Grant permissions to enable AI ingredient detection and recipe updates.',
+              'Before we start',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -1,
+                color: AppColors.textPrimary,
+              ),
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium,
-            ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.1),
+            ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.2),
+            const SizedBox(height: 12),
+            Text(
+              'KitchenLens needs a couple of permissions to work its magic in your kitchen.',
+              style: TextStyle(
+                fontSize: 16,
+                height: 1.5,
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.2),
             const SizedBox(height: AppDimensions.xxl),
 
             // Permission Toggles
@@ -98,7 +117,6 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
               subtitle: 'For instant ingredient detection',
               value: _cameraEnabled,
               onChanged: (val) => setState(() => _cameraEnabled = val),
-              isDark: isDark,
             ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
             const SizedBox(height: AppDimensions.md),
 
@@ -109,44 +127,37 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
               subtitle: 'Daily personalized recipe ideas',
               value: _notifEnabled,
               onChanged: (val) => setState(() => _notifEnabled = val),
-              isDark: isDark,
             ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
 
             // Privacy Notice
             const SizedBox(height: AppDimensions.xl),
             Container(
-              padding: const EdgeInsets.all(AppDimensions.md),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isDark
-                    ? Colors.blue.shade900.withAlpha(50)
-                    : Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
-                border: Border.all(
-                  color: isDark ? Colors.blue.shade900 : Colors.blue.shade100,
-                ),
+                color: AppColors.surfaceVariant,
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    LucideIcons.shieldCheck,
-                    color: isDark ? Colors.blue.shade300 : Colors.blue.shade600,
+                  const Icon(
+                    Icons.lock_outline,
                     size: 20,
+                    color: AppColors.textSecondary,
                   ),
-                  const SizedBox(width: AppDimensions.sm),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'We value your privacy. Data processing happens locally on your device for maximum security.',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: isDark
-                            ? Colors.blue.shade200
-                            : Colors.blue.shade900,
+                      'We only use these permissions to provide the core service. Your data never leaves your device unencrypted.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        height: 1.5,
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ),
                 ],
               ),
-            ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.1),
+            ).animate().fadeIn(delay: 700.ms).slideY(begin: 0.1),
 
             const Spacer(),
 
@@ -161,7 +172,7 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
               child: Text(
                 'Skip for now',
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: AppColors.textSecondaryLight,
+                  color: AppColors.textSecondary,
                 ),
               ),
             ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
@@ -179,23 +190,19 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
     required String subtitle,
     required bool value,
     required ValueChanged<bool> onChanged,
-    required bool isDark,
   }) {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.md),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
-        border: Border.all(
-          color: isDark ? AppColors.surfaceVariantDark : Colors.transparent,
-        ),
+        border: Border.all(color: Colors.transparent),
         boxShadow: [
-          if (!isDark)
-            BoxShadow(
-              color: Colors.black.withAlpha(10),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
-            ),
+          BoxShadow(
+            color: Colors.black.withAlpha(10),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
         ],
       ),
       child: Row(
@@ -204,9 +211,7 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppColors.primary.withAlpha(
-                isDark ? 51 : 25,
-              ), // 0.2 / 0.1 opacity
+              color: AppColors.primary.withAlpha(25), // 0.1 opacity
               borderRadius: BorderRadius.circular(AppDimensions.radiusMax),
             ),
             child: Icon(icon, color: AppColors.primary),
@@ -227,9 +232,7 @@ class _StepTwoPermissionsState extends State<StepTwoPermissions> {
             activeThumbColor: Colors.white,
             activeTrackColor: AppColors.primary,
             inactiveThumbColor: Colors.white,
-            inactiveTrackColor: isDark
-                ? Colors.grey.shade800
-                : Colors.grey.shade300,
+            inactiveTrackColor: Colors.grey.shade300,
           ),
         ],
       ),

@@ -28,10 +28,7 @@ class _CapturePageState extends State<CapturePage> {
     // });
   }
 
-  void _toggleMode() {
-    if (_isRecording) return;
-    setState(() => _isVideoMode = !_isVideoMode);
-  }
+  
 
   void _recordToggle() {
     if (_isVideoMode) {
@@ -97,7 +94,7 @@ class _CapturePageState extends State<CapturePage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Container(color: Colors.black.withOpacity(0.2)),
+                child: Container(color: Colors.black.withAlpha(51)),
               ),
             ),
 
@@ -127,7 +124,7 @@ class _CapturePageState extends State<CapturePage> {
                       ),
                       decoration: BoxDecoration(
                         color: Colors.black45,
-                        borderRadius: AppDimensions.borderRadiusFull,
+                        borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
                         '00:${_recordingSeconds.toString().padLeft(2, '0')}',
@@ -160,7 +157,7 @@ class _CapturePageState extends State<CapturePage> {
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: Colors.black45,
-                        borderRadius: AppDimensions.borderRadiusFull,
+                        borderRadius: BorderRadius.circular(999),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -205,7 +202,7 @@ class _CapturePageState extends State<CapturePage> {
                                     : Colors.white,
                                 borderRadius: _isRecording
                                     ? BorderRadius.circular(8)
-                                    : AppDimensions.borderRadiusFull,
+                                    : BorderRadius.circular(999),
                               ),
                             ),
                           ),
@@ -232,7 +229,7 @@ class _CapturePageState extends State<CapturePage> {
       child: Container(
         padding: const EdgeInsets.all(AppDimensions.sm),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withAlpha(51),
           shape: BoxShape.circle,
         ),
         child: Icon(icon, color: iconColor),
@@ -252,7 +249,7 @@ class _CapturePageState extends State<CapturePage> {
         ),
         decoration: BoxDecoration(
           color: isActive ? Colors.white : Colors.transparent,
-          borderRadius: AppDimensions.borderRadiusFull,
+          borderRadius: BorderRadius.circular(999),
         ),
         child: Text(
           title,

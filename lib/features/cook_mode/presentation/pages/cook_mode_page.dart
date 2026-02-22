@@ -76,15 +76,14 @@ class _CookModePageState extends State<CookModePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.backgroundAlt,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(theme, isDark),
-            _buildProgressBar(isDark),
+            _buildHeader(theme),
+            _buildProgressBar(),
             Expanded(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 350),
@@ -100,17 +99,17 @@ class _CookModePageState extends State<CookModePage> {
                     ),
                   );
                 },
-                child: _buildStepContent(theme, isDark),
+                child: _buildStepContent(theme),
               ),
             ),
-            _buildFooter(theme, isDark),
+            _buildFooter(theme),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(ThemeData theme, bool isDark) {
+  Widget _buildHeader(ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppDimensions.screenPadding,
@@ -126,7 +125,7 @@ class _CookModePageState extends State<CookModePage> {
           Text(
             'STEP ${_currentStep + 1} OF $_totalSteps',
             style: theme.textTheme.labelMedium?.copyWith(
-              color: isDark ? Colors.grey.shade400 : const Color(0xFF6C757D),
+              color: AppColors.textSecondary,
               letterSpacing: 0.5,
               fontWeight: FontWeight.w600,
             ),
@@ -139,7 +138,7 @@ class _CookModePageState extends State<CookModePage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: isDark ? Colors.grey.shade800 : const Color(0xFFE9ECEF),
+                color: AppColors.surfaceBorder,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -147,7 +146,7 @@ class _CookModePageState extends State<CookModePage> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : const Color(0xFF1A1C1E),
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -157,13 +156,15 @@ class _CookModePageState extends State<CookModePage> {
     );
   }
 
-  Widget _buildProgressBar(bool isDark) {
+  Widget _buildProgressBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.screenPadding),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.screenPadding,
+      ),
       child: Container(
         height: 4,
         decoration: BoxDecoration(
-          color: isDark ? Colors.grey.shade800 : const Color(0xFFE9ECEF),
+          color: AppColors.surfaceBorder,
           borderRadius: BorderRadius.circular(2),
         ),
         child: FractionallySizedBox(
@@ -182,7 +183,7 @@ class _CookModePageState extends State<CookModePage> {
     );
   }
 
-  Widget _buildStepContent(ThemeData theme, bool isDark) {
+  Widget _buildStepContent(ThemeData theme) {
     final step = _step;
     final timerMinutes = step['timerMinutes'] as int;
 
@@ -200,7 +201,7 @@ class _CookModePageState extends State<CookModePage> {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withAlpha(isDark ? 60 : 20),
+                  color: Colors.black.withAlpha(20),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
@@ -214,16 +215,18 @@ class _CookModePageState extends State<CookModePage> {
                   CachedNetworkImage(
                     imageUrl: step['imageUrl'],
                     fit: BoxFit.cover,
-                    placeholder: (_, _) => Container(
-                      color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-                    ),
+                    placeholder: (_, _) =>
+                        Container(color: AppColors.surfaceVariant),
                   ),
                   // "COOKING" badge
                   Positioned(
                     top: 16,
                     right: 16,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFE7F9F0),
                         borderRadius: BorderRadius.circular(12),
@@ -266,7 +269,7 @@ class _CookModePageState extends State<CookModePage> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w800,
-                color: isDark ? Colors.white : const Color(0xFF1A1C1E),
+                color: AppColors.textPrimary,
                 fontFamily: 'Manrope',
               ),
               children: [
@@ -287,7 +290,7 @@ class _CookModePageState extends State<CookModePage> {
             style: TextStyle(
               fontSize: 18,
               height: 1.6,
-              color: isDark ? Colors.grey.shade300 : const Color(0xFF495057),
+              color: AppColors.textSecondary,
             ),
           ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.05),
 
@@ -298,11 +301,11 @@ class _CookModePageState extends State<CookModePage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceDark : Colors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(40),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withAlpha(isDark ? 30 : 12),
+                    color: Colors.black.withAlpha(12),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -333,18 +336,20 @@ class _CookModePageState extends State<CookModePage> {
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.grey.shade400 : const Color(0xFF6C757D),
+                            color: AppColors.textSecondary,
                             letterSpacing: 1,
                           ),
                         ),
                         Text(
-                          _timerRunning ? _formattedTimer : '${timerMinutes.toString().padLeft(2, '0')}:00',
+                          _timerRunning
+                              ? _formattedTimer
+                              : '${timerMinutes.toString().padLeft(2, '0')}:00',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: _timerRunning
                                 ? AppColors.primary
-                                : (isDark ? Colors.white : const Color(0xFF1A1C1E)),
+                                : (AppColors.textPrimary),
                           ),
                         ),
                       ],
@@ -360,9 +365,14 @@ class _CookModePageState extends State<CookModePage> {
                     },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                       decoration: BoxDecoration(
-                        color: _timerRunning ? Colors.red.shade400 : AppColors.primary,
+                        color: _timerRunning
+                            ? Colors.red.shade400
+                            : AppColors.primary,
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: Text(
@@ -385,11 +395,11 @@ class _CookModePageState extends State<CookModePage> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.surfaceDark : Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(40),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withAlpha(isDark ? 30 : 12),
+                  color: Colors.black.withAlpha(12),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -402,13 +412,13 @@ class _CookModePageState extends State<CookModePage> {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade800 : const Color(0xFFF8F9FA),
+                    color: AppColors.surface,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Icon(
                     LucideIcons.lightbulb,
                     size: 18,
-                    color: isDark ? Colors.grey.shade400 : const Color(0xFF6C757D),
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -420,7 +430,7 @@ class _CookModePageState extends State<CookModePage> {
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.5,
-                        color: isDark ? Colors.grey.shade400 : const Color(0xFF6C757D),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -433,7 +443,7 @@ class _CookModePageState extends State<CookModePage> {
     );
   }
 
-  Widget _buildFooter(ThemeData theme, bool isDark) {
+  Widget _buildFooter(ThemeData theme) {
     final isFirst = _currentStep == 0;
     final isLast = _currentStep == _totalSteps - 1;
 
@@ -455,11 +465,9 @@ class _CookModePageState extends State<CookModePage> {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey.shade800 : const Color(0xFFF8F9FA),
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: isDark ? Colors.grey.shade700 : const Color(0xFFE9ECEF),
-                  ),
+                  border: Border.all(color: AppColors.surfaceBorder),
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -469,7 +477,7 @@ class _CookModePageState extends State<CookModePage> {
                     fontWeight: FontWeight.w700,
                     color: isFirst
                         ? Colors.grey.shade400
-                        : (isDark ? Colors.white : const Color(0xFF1A1C1E)),
+                        : (AppColors.textPrimary),
                   ),
                 ),
               ),
@@ -491,17 +499,11 @@ class _CookModePageState extends State<CookModePage> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: isDark ? Colors.grey.shade800 : const Color(0xFFF8F9FA),
+                color: AppColors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: isDark ? Colors.grey.shade700 : const Color(0xFFE9ECEF),
-                ),
+                border: Border.all(color: AppColors.surfaceBorder),
               ),
-              child: Icon(
-                LucideIcons.mic,
-                color: AppColors.primary,
-                size: 24,
-              ),
+              child: Icon(LucideIcons.mic, color: AppColors.primary, size: 24),
             ),
           ),
           const SizedBox(width: 12),
@@ -537,7 +539,11 @@ class _CookModePageState extends State<CookModePage> {
                     ),
                     if (!isLast) ...[
                       const SizedBox(width: 4),
-                      const Icon(LucideIcons.chevronRight, size: 20, color: Colors.white),
+                      const Icon(
+                        LucideIcons.chevronRight,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                     ],
                   ],
                 ),

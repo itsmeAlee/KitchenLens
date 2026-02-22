@@ -38,7 +38,6 @@ class _StepThreeDietState extends State<StepThreeDiet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return SafeArea(
       child: Column(
@@ -53,52 +52,40 @@ class _StepThreeDietState extends State<StepThreeDiet> {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      width: 32,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppDimensions.xl),
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryLight,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.restaurant_menu,
+                    size: 32,
+                    color: AppColors.primary,
+                  ),
+                ).animate().scale(delay: 200.ms, begin: const Offset(0.5, 0.5)),
+                const SizedBox(height: 24),
                 Text(
-                  'Dietary Preferences',
-                  style: theme.textTheme.displaySmall,
-                ).animate().fadeIn().slideY(begin: 0.1),
-                const SizedBox(height: AppDimensions.sm),
-                Text(
-                  'Customize your experience. We\'ll tailor recipes and suggestions to fit your lifestyle.',
+                  'Any dietary preferences?',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -1,
+                    color: AppColors.textPrimary,
+                  ),
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium,
-                ).animate().fadeIn(delay: 100.ms).slideY(begin: 0.1),
+                ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.2),
+                const SizedBox(height: 12),
+                Text(
+                  'This helps us tailor recipe suggestions to your specific needs.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    color: AppColors.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.2),
               ],
             ),
           ),
@@ -113,9 +100,7 @@ class _StepThreeDietState extends State<StepThreeDiet> {
               decoration: InputDecoration(
                 hintText: 'Search diets, ingredients...',
                 prefixIcon: const Icon(LucideIcons.search),
-                fillColor: isDark
-                    ? AppColors.surfaceDark
-                    : Colors.grey.shade100,
+                fillColor: AppColors.surfaceVariant, // Changed from isDark
               ),
             ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
           ),
@@ -129,9 +114,11 @@ class _StepThreeDietState extends State<StepThreeDiet> {
               children: [
                 // Diets
                 Text(
-                  'COMMON DIETS',
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    letterSpacing: 1.2,
+                  'Diet',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
                   ),
                 ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.1),
                 const SizedBox(height: AppDimensions.sm),
@@ -152,24 +139,28 @@ class _StepThreeDietState extends State<StepThreeDiet> {
                           }
                         });
                       },
-                      selectedColor: AppColors.primary,
-                      backgroundColor: isDark
-                          ? AppColors.surfaceVariantDark
-                          : Colors.grey.shade100,
+                      backgroundColor:
+                          AppColors.surfaceVariant, // Changed from isDark
+                      selectedColor: AppColors.primary.withAlpha(25),
                       labelStyle: TextStyle(
                         color: isSelected
-                            ? AppColors.textMainLight
-                            : (isDark
-                                  ? AppColors.textMainDark
-                                  : AppColors.textMainLight),
-                        fontWeight: FontWeight.w600,
+                            ? AppColors.primary
+                            : AppColors.textSecondary, // Changed from isDark
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
-                      checkmarkColor: AppColors.textMainLight,
-                      side: BorderSide.none,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          AppDimensions.radiusMax,
+                        borderRadius: BorderRadius.circular(999),
+                        side: BorderSide(
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.surfaceBorder, // Changed from isDark
                         ),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
                       ),
                     );
                   }).toList(),
@@ -216,15 +207,12 @@ class _StepThreeDietState extends State<StepThreeDiet> {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? AppColors.primary.withAlpha(25)
-                              : (isDark
-                                    ? AppColors.surfaceVariantDark
-                                    : Colors.white),
+                              : AppColors.background, // Changed from isDark
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primary
-                                : (isDark
-                                      ? AppColors.surfaceVariantDark
-                                      : Colors.grey.shade200),
+                                : AppColors
+                                      .surfaceBorder, // Changed from isDark
                             width: isSelected ? 2 : 1,
                           ),
                           borderRadius: BorderRadius.circular(
@@ -239,17 +227,17 @@ class _StepThreeDietState extends State<StepThreeDiet> {
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? AppColors.primary
-                                    : (isDark
-                                          ? Colors.grey.shade800
-                                          : Colors.grey.shade200),
+                                    : AppColors
+                                          .surfaceVariant, // Changed from isDark
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Icon(
                                 allergy['icon'],
                                 size: 16,
                                 color: isSelected
-                                    ? AppColors.textMainLight
-                                    : AppColors.textSecondaryLight,
+                                    ? AppColors.surface
+                                    : AppColors
+                                          .textSecondary, // Changed from AppColors.textSecondaryLight
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -262,9 +250,7 @@ class _StepThreeDietState extends State<StepThreeDiet> {
                                     allergy['name'],
                                     style: theme.textTheme.bodySmall?.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: isDark
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: AppColors.textPrimary,
                                     ),
                                   ),
                                   if (allergy['desc'].toString().isNotEmpty)
@@ -297,16 +283,8 @@ class _StepThreeDietState extends State<StepThreeDiet> {
           Container(
             padding: const EdgeInsets.all(AppDimensions.screenPadding),
             decoration: BoxDecoration(
-              color: isDark
-                  ? AppColors.backgroundDark
-                  : AppColors.backgroundLight,
-              border: Border(
-                top: BorderSide(
-                  color: isDark
-                      ? AppColors.surfaceVariantDark
-                      : Colors.grey.shade200,
-                ),
-              ),
+              color: AppColors.background,
+              border: Border(top: BorderSide(color: Colors.grey.shade200)),
             ),
             child: Column(
               children: [
@@ -320,7 +298,7 @@ class _StepThreeDietState extends State<StepThreeDiet> {
                   child: Text(
                     'Skip for now',
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: AppColors.textSecondaryLight,
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),

@@ -20,29 +20,18 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Profile & Settings'),
+        title: const Text('Settings'),
         centerTitle: true,
-        backgroundColor: isDark
-            ? AppColors.backgroundDark
-            : AppColors.backgroundLight,
+        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(LucideIcons.chevronLeft),
           onPressed: () => context.pop(),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.logOut),
-            onPressed: () {
-              // Sign out logic...
-              context.go('/auth');
-            },
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(
@@ -50,88 +39,16 @@ class _SettingsPageState extends State<SettingsPage> {
           vertical: AppDimensions.md,
         ),
         children: [
-          // Profile Header
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary, width: 3),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuDDKDKW9KBpXgAeoDm2wd9cAz16G6YXiO5oGw_2j74f-dRZFowUsbsVpupBaffUV5cIT_oKJNbXtDsrjtlFialhLgeV7WQqGtvPEHcq_9H-3_i-QMCODCaPybyxivOVw3Uoy8eX9G2ya09C7WaZfWEwv13cDiNynx8ab-lik2kruk9FNHBG9pu5yXsITskj3HfEGnMFEWZPekbvdgyj5hHnbcGE3oxGMK4S57Yx19bu2g0xVOFzp-0eIsYYaP7I0eL_SWzP_0c94To1',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ).animate().scale().fadeIn(),
-                const SizedBox(height: AppDimensions.md),
-                Text(
-                  'Chef Alex',
-                  style: theme.textTheme.titleLarge,
-                ).animate().fadeIn(delay: 100.ms),
-                Text(
-                  'Premium Member',
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: AppColors.primary,
-                  ),
-                ).animate().fadeIn(delay: 150.ms),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppDimensions.xl),
-
-          // Stats Grid
-          Row(
-            children: [
-              Expanded(
-                child: _buildStatCard(
-                  theme,
-                  isDark,
-                  'Recipes Cooked',
-                  '42',
-                  LucideIcons.chefHat,
-                ),
-              ),
-              const SizedBox(width: AppDimensions.md),
-              Expanded(
-                child: _buildStatCard(
-                  theme,
-                  isDark,
-                  'Items Scanned',
-                  '156',
-                  LucideIcons.scanLine,
-                ),
-              ),
-              const SizedBox(width: AppDimensions.md),
-              Expanded(
-                child: _buildStatCard(
-                  theme,
-                  isDark,
-                  'Waste Saved',
-                  '12kg',
-                  LucideIcons.leaf,
-                ),
-              ),
-            ],
-          ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
-          const SizedBox(height: AppDimensions.xxl),
-
           // Preferences Segment
           Text(
             'PREFERENCES',
             style: theme.textTheme.labelSmall?.copyWith(letterSpacing: 1.2),
-          ).animate().fadeIn(delay: 300.ms),
+          ).animate().fadeIn(delay: 100.ms),
           const SizedBox(height: AppDimensions.sm),
           _buildSettingsGroup(
-            isDark,
             children: [
               _buildSettingsListTile(
                 theme,
-                isDark,
                 title: 'Dietary Profile',
                 subtitle: 'Vegetarian, Nut Allergy',
                 icon: LucideIcons.apple,
@@ -140,28 +57,25 @@ class _SettingsPageState extends State<SettingsPage> {
               const Divider(height: 1),
               _buildSettingsListTile(
                 theme,
-                isDark,
                 title: 'Theme',
-                subtitle: 'System Default',
+                subtitle: 'Light',
                 icon: LucideIcons.moon,
                 onTap: () {},
               ),
             ],
-          ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.1),
+          ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
 
           const SizedBox(height: AppDimensions.xl),
           // App Settings Segment
           Text(
             'APP SETTINGS',
             style: theme.textTheme.labelSmall?.copyWith(letterSpacing: 1.2),
-          ).animate().fadeIn(delay: 500.ms),
+          ).animate().fadeIn(delay: 300.ms),
           const SizedBox(height: AppDimensions.sm),
           _buildSettingsGroup(
-            isDark,
             children: [
               _buildSwitchTile(
                 theme,
-                isDark,
                 title: 'Push Notifications',
                 icon: LucideIcons.bell,
                 value: _pushNotifications,
@@ -170,7 +84,6 @@ class _SettingsPageState extends State<SettingsPage> {
               const Divider(height: 1),
               _buildSwitchTile(
                 theme,
-                isDark,
                 title: 'Dietary Warning Alerts',
                 icon: Icons.warning_amber_rounded,
                 value: _dietaryAlerts,
@@ -179,14 +92,13 @@ class _SettingsPageState extends State<SettingsPage> {
               const Divider(height: 1),
               _buildSwitchTile(
                 theme,
-                isDark,
                 title: 'Save Scan History',
                 icon: LucideIcons.history,
                 value: _saveScans,
                 onChanged: (val) => setState(() => _saveScans = val),
               ),
             ],
-          ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.1),
+          ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.1),
 
           const SizedBox(height: AppDimensions.xxxl),
         ],
@@ -194,70 +106,19 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildStatCard(
-    ThemeData theme,
-    bool isDark,
-    String title,
-    String value,
-    IconData icon,
-  ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppDimensions.md,
-        horizontal: AppDimensions.sm,
-      ),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
-        border: Border.all(
-          color: isDark ? AppColors.surfaceVariantDark : Colors.transparent,
-        ),
-        boxShadow: [
-          if (!isDark)
-            BoxShadow(
-              color: Colors.black.withAlpha(5),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: AppColors.primary, size: 24),
-          const SizedBox(height: AppDimensions.sm),
-          Text(
-            value,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            title,
-            style: theme.textTheme.bodySmall?.copyWith(fontSize: 10),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsGroup(bool isDark, {required List<Widget> children}) {
+  Widget _buildSettingsGroup({required List<Widget> children}) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusLg),
-        border: Border.all(
-          color: isDark ? AppColors.surfaceVariantDark : Colors.grey.shade200,
-        ),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(children: children),
     );
   }
 
   Widget _buildSettingsListTile(
-    ThemeData theme,
-    bool isDark, {
+    ThemeData theme, {
     required String title,
     required String subtitle,
     required IconData icon,
@@ -277,15 +138,14 @@ class _SettingsPageState extends State<SettingsPage> {
       trailing: Icon(
         LucideIcons.chevronRight,
         size: 20,
-        color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
+        color: Colors.grey.shade400,
       ),
       onTap: onTap,
     );
   }
 
   Widget _buildSwitchTile(
-    ThemeData theme,
-    bool isDark, {
+    ThemeData theme, {
     required String title,
     required IconData icon,
     required bool value,
@@ -295,14 +155,10 @@ class _SettingsPageState extends State<SettingsPage> {
       leading: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+          color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(
-          icon,
-          color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
-          size: 20,
-        ),
+        child: Icon(icon, color: Colors.grey.shade600, size: 20),
       ),
       title: Text(title, style: theme.textTheme.bodyLarge),
       trailing: Switch(
@@ -311,9 +167,7 @@ class _SettingsPageState extends State<SettingsPage> {
         activeThumbColor: Colors.white,
         activeTrackColor: AppColors.primary,
         inactiveThumbColor: Colors.white,
-        inactiveTrackColor: isDark
-            ? Colors.grey.shade700
-            : Colors.grey.shade300,
+        inactiveTrackColor: Colors.grey.shade300,
       ),
     );
   }

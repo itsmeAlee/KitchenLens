@@ -3,6 +3,7 @@ import 'package:kitchen_lens/core/theme/app_colors.dart';
 import 'package:kitchen_lens/core/theme/app_dimensions.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class StepOneWelcome extends StatelessWidget {
   final VoidCallback onNext;
@@ -13,7 +14,6 @@ class StepOneWelcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return SafeArea(
       child: Padding(
@@ -56,12 +56,7 @@ class StepOneWelcome extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   gradient: LinearGradient(
-                    colors: isDark
-                        ? [
-                            Colors.green.shade900.withAlpha(50),
-                            Colors.green.shade800.withAlpha(50),
-                          ]
-                        : [Colors.green.shade50, Colors.green.shade100],
+                    colors: [Colors.green.shade50, Colors.green.shade100],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                   ),
@@ -71,85 +66,96 @@ class StepOneWelcome extends StatelessWidget {
                     Positioned.fill(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(40),
-                        child: Image.network(
-                          'https://lh3.googleusercontent.com/aida-public/AB6AXuDUw-h7mB6Z2GyEJEcme-BEmYU7mtfb4mNF98fYpXGTaur22GI31vwTbZHrxbMxwrx-I5tJAnZEycKsG9smo183xHFld8_DVvwffkRPMsbHYMDdC5Eugmrrng6JIAwwz6hQpoh9cWtMquSDFc6Jf4nb5IEN6GdFI2tc7A3a3yL-J2ovW-wOyMvKKJzehhBuHsyKo2r1SKJ4-9dj3rxg-dl_zWcC60PKtNiAPh0Ct7vj1XWRbUrcJGzObjM43XgYiOShZVDXfFBEEyIk',
-                          fit: BoxFit.cover,
-                        ),
+                        child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop',
+                        fit: BoxFit.cover,
+                        memCacheWidth: 800, // Added memCacheWidth
                       ),
-                    ),
-                    Positioned.fill(
-                      child: Container(
+                      // Gradient Overlay
+                      Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
                           gradient: LinearGradient(
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withAlpha(150),
-                            ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              AppColors.textPrimary.withAlpha(128),
+                              AppColors.textPrimary.withAlpha(230),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                    // Simulated Scanner Overlay
-                    Center(
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.primary.withAlpha(128),
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.radiusMd,
-                          ),
-                          color: Colors.white.withAlpha(25),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                                  LucideIcons.scanLine,
-                                  color: Colors.white,
-                                  size: 36,
-                                )
-                                .animate(
-                                  onPlay: (controller) =>
-                                      controller.repeat(reverse: true),
-                                )
-                                .fadeIn()
-                                .scale(),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'Matching Inventory...',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      // Simulated Scanner Overlay
+                      Center(
+                        child: Container(
+                          width: 150,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.primary.withAlpha(128),
                             ),
-                          ],
+                            borderRadius: BorderRadius.circular(
+                              AppDimensions.radiusMd,
+                            ),
+                            color: AppColors.textPrimary.withAlpha(25),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                LucideIcons.scanLine,
+                                color: AppColors.textPrimary,
+                                size: 36,
+                              )
+                                  .animate(
+                                onPlay: (controller) =>
+                                    controller.repeat(reverse: true),
+                              )
+                                  .fadeIn()
+                                  .scale(),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Matching Inventory...',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ).animate().fadeIn(duration: 500.ms).scale(begin: const Offset(0.9, 0.9)),
-            ),
+              ),
+                    ],
+                  ),
+                ),
+            ).animate().fadeIn(duration: 500.ms).scale(begin: const Offset(0.9, 0.9)),
             const Spacer(),
 
             // Text Content
             Text(
-              'Intelligent\nRecipe Discovery',
+              'See what\'s cooking',
+              style: theme.textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                height: 1.1,
+                letterSpacing: -1,
+                color: AppColors.textPrimary,
+              ),
               textAlign: TextAlign.center,
-              style: theme.textTheme.displaySmall,
             ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.2),
             const SizedBox(height: AppDimensions.md),
             Text(
-              'Reasoning about recipes tailored to your unique dietary profile and inventory.',
+              'Point your camera at any ingredients and let KitchenLens craft the perfect recipe for you.',
               textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.2),
             const Spacer(),
 
@@ -170,7 +176,7 @@ class StepOneWelcome extends StatelessWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+                    color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -179,7 +185,7 @@ class StepOneWelcome extends StatelessWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+                    color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),

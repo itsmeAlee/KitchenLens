@@ -11,6 +11,7 @@ import 'package:kitchen_lens/features/scan_result/presentation/pages/scan_result
 import 'package:kitchen_lens/features/recipes/presentation/pages/recipe_detail_page.dart';
 import 'package:kitchen_lens/features/cook_mode/presentation/pages/cook_mode_page.dart';
 import 'package:kitchen_lens/features/settings/presentation/pages/settings_page.dart';
+import 'package:kitchen_lens/features/profile/presentation/pages/profile_page.dart';
 
 /// Custom slide-up transition used for most routes.
 CustomTransitionPage<void> _buildTransitionPage({
@@ -21,7 +22,10 @@ CustomTransitionPage<void> _buildTransitionPage({
     key: key,
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final curve = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+      final curve = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+      );
       return FadeTransition(
         opacity: curve,
         child: SlideTransition(
@@ -46,24 +50,18 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/auth',
-      pageBuilder: (context, state) => _buildTransitionPage(
-        key: state.pageKey,
-        child: const AuthPage(),
-      ),
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const AuthPage()),
     ),
     GoRoute(
       path: '/home',
-      pageBuilder: (context, state) => _buildTransitionPage(
-        key: state.pageKey,
-        child: const HomePage(),
-      ),
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const HomePage()),
     ),
     GoRoute(
       path: '/capture',
-      pageBuilder: (context, state) => _buildTransitionPage(
-        key: state.pageKey,
-        child: const CapturePage(),
-      ),
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const CapturePage()),
     ),
     GoRoute(
       path: '/upload',
@@ -88,17 +86,18 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/cook_mode',
-      pageBuilder: (context, state) => _buildTransitionPage(
-        key: state.pageKey,
-        child: const CookModePage(),
-      ),
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const CookModePage()),
     ),
     GoRoute(
-      path: '/settings',
-      pageBuilder: (context, state) => _buildTransitionPage(
-        key: state.pageKey,
-        child: const SettingsPage(),
-      ),
+      path: '/profile',
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const ProfilePage()),
+    ),
+    GoRoute(
+      path: '/profile/settings',
+      pageBuilder: (context, state) =>
+          _buildTransitionPage(key: state.pageKey, child: const SettingsPage()),
     ),
   ],
 );

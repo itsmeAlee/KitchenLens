@@ -10,8 +10,6 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       title: 'KitchenLens',
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system, // use system theme mode
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );

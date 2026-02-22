@@ -21,10 +21,25 @@ class MockData {
   ];
 
   static const List<Map<String, dynamic>> allergies = [
-    {'name': 'Shellfish', 'icon': '🦐', 'materialIcon': 'set_meal', 'subtitle': 'Strict avoid'},
-    {'name': 'Nuts', 'icon': '🥜', 'materialIcon': 'nutrition', 'subtitle': 'Peanuts, etc.'},
+    {
+      'name': 'Shellfish',
+      'icon': '🦐',
+      'materialIcon': 'set_meal',
+      'subtitle': 'Strict avoid',
+    },
+    {
+      'name': 'Nuts',
+      'icon': '🥜',
+      'materialIcon': 'nutrition',
+      'subtitle': 'Peanuts, etc.',
+    },
     {'name': 'Eggs', 'icon': '🥚', 'materialIcon': 'egg', 'subtitle': ''},
-    {'name': 'Dairy', 'icon': '🥛', 'materialIcon': 'water_drop', 'subtitle': ''},
+    {
+      'name': 'Dairy',
+      'icon': '🥛',
+      'materialIcon': 'water_drop',
+      'subtitle': '',
+    },
     {'name': 'Soy', 'icon': '🫘', 'materialIcon': 'grain', 'subtitle': ''},
     {'name': 'Wheat', 'icon': '🌾', 'materialIcon': 'grass', 'subtitle': ''},
   ];
@@ -53,14 +68,49 @@ class MockData {
 
   // ── Detected Ingredients (Scan Result) ──
   static const List<Map<String, dynamic>> detectedIngredients = [
-    {'name': 'Salmon', 'emoji': '🐟', 'confidence': 0.98, 'bgColor': 0xFFFFF7ED},
-    {'name': 'Broccoli', 'emoji': '🥦', 'confidence': 0.95, 'bgColor': 0xFFF0FDF4},
+    {
+      'name': 'Salmon',
+      'emoji': '🐟',
+      'confidence': 0.98,
+      'bgColor': 0xFFFFF7ED,
+    },
+    {
+      'name': 'Broccoli',
+      'emoji': '🥦',
+      'confidence': 0.95,
+      'bgColor': 0xFFF0FDF4,
+    },
     {'name': 'Lemon', 'emoji': '🍋', 'confidence': 0.92, 'bgColor': 0xFFFEFCE8},
-    {'name': 'Garlic', 'emoji': '🧄', 'confidence': 0.91, 'bgColor': 0xFFFEF2F2},
-    {'name': 'Butter', 'emoji': '🧈', 'confidence': 0.88, 'bgColor': 0xFFF8FAFC},
-    {'name': 'Asparagus', 'emoji': '🌿', 'confidence': 0.85, 'bgColor': 0xFFF0FDF4},
-    {'name': 'Olive Oil', 'emoji': '🫒', 'confidence': 0.82, 'bgColor': 0xFFFEFCE8},
-    {'name': 'Cherry Tomatoes', 'emoji': '🍅', 'confidence': 0.79, 'bgColor': 0xFFFEF2F2},
+    {
+      'name': 'Garlic',
+      'emoji': '🧄',
+      'confidence': 0.91,
+      'bgColor': 0xFFFEF2F2,
+    },
+    {
+      'name': 'Butter',
+      'emoji': '🧈',
+      'confidence': 0.88,
+      'bgColor': 0xFFF8FAFC,
+    },
+    {
+      'name': 'Asparagus',
+      'emoji': '🌿',
+      'confidence': 0.85,
+      'bgColor': 0xFFF0FDF4,
+    },
+    {
+      'name': 'Olive Oil',
+      'emoji': '🫒',
+      'confidence': 0.82,
+      'bgColor': 0xFFFEFCE8,
+    },
+    {
+      'name': 'Cherry Tomatoes',
+      'emoji': '🍅',
+      'confidence': 0.79,
+      'bgColor': 0xFFFEF2F2,
+    },
   ];
 
   // ── Recipes ──
@@ -81,9 +131,17 @@ class MockData {
       'imageUrl':
           'https://lh3.googleusercontent.com/aida-public/AB6AXuCN6H_3ND6yDxjsUOUc-o4BDo3zVaQpcTQJv60cHg4K28sQCMJzbJOzVmzehuA-C3PgC5I2TcYwlYWP10KRnGtpJybISu0O9khP_hrBgoaX9_1sIdAc0rtefSoZ72xJpX3iZKJ4AiUFzN0HttF_ZY45m7gEe0crA51USd_ZGvj_x0_1OC5lCu3GMTVGBMZb6tzHZneKGVmuArgVY_hd1JnoHqZid_tZ1aCJrkVqPRn18QN6d9VBjP_13O_llOpZdnvhponxndyWOgGu',
       'ingredients': [
-        {'name': 'Fresh Salmon Fillets', 'amount': '2 pcs (400g)', 'checked': false},
+        {
+          'name': 'Fresh Salmon Fillets',
+          'amount': '2 pcs (400g)',
+          'checked': false,
+        },
         {'name': 'Green Asparagus', 'amount': '1 bunch', 'checked': false},
-        {'name': 'Extra Virgin Olive Oil', 'amount': '2 tbsp', 'checked': false},
+        {
+          'name': 'Extra Virgin Olive Oil',
+          'amount': '2 tbsp',
+          'checked': false,
+        },
         {'name': 'Fresh Lemon', 'amount': '1/2 unit', 'checked': false},
         {'name': 'Garlic Cloves', 'amount': '3 cloves', 'checked': false},
         {'name': 'Butter', 'amount': '2 tbsp', 'checked': false},
@@ -115,7 +173,8 @@ class MockData {
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDDKDKW9KBpXgAeoDm2wd9cAz16G6YXiO5oGw_2j74f-dRZFowUsbsVpupBaffUV5cIT_oKJNbXtDsrjtlFialhLgeV7WQqGtvPEHcq_9H-3_i-QMCODCaPybyxivOVw3Uoy8eX9G2ya09C7WaZfWEwv13cDiNynx8ab-lik2kruk9FNHBG9pu5yXsITskj3HfEGnMFEWZPekbvdgyj5hHnbcGE3oxGMK4S57Yx19bu2g0xVOFzp-0eIsYYaP7I0eL_SWzP_0c94To1',
       'ingredients': [],
       'instructions': [],
-      'reasoning': 'A quick pasta using your lemon and butter with pantry staples.',
+      'reasoning':
+          'A quick pasta using your lemon and butter with pantry staples.',
     },
     {
       'id': 'rec_3',
@@ -143,73 +202,99 @@ class MockData {
     {
       'step': 1,
       'title': 'Prepare the Salmon',
-      'description': 'Season salmon fillets generously with salt and pepper. Pat the skin dry for extra crispiness.',
+      'description':
+          'Season salmon fillets generously with salt and pepper. Pat the skin dry for extra crispiness.',
       'timerMinutes': 0,
-      'tip': 'Let the salmon rest at room temperature for 10 minutes before cooking for more even results.',
-      'imageUrl': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'Let the salmon rest at room temperature for 10 minutes before cooking for more even results.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 2,
       'title': 'Heat the Pan',
-      'description': 'Heat olive oil in a large skillet over medium-high heat until it shimmers.',
+      'description':
+          'Heat olive oil in a large skillet over medium-high heat until it shimmers.',
       'timerMinutes': 2,
-      'tip': 'The oil should shimmer but not smoke. If it smokes, reduce the heat slightly.',
-      'imageUrl': 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'The oil should shimmer but not smoke. If it smokes, reduce the heat slightly.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 3,
       'title': 'Sear the Salmon',
-      'description': 'Place salmon skin-side down. Sear for 4 minutes until golden brown.',
+      'description':
+          'Place salmon skin-side down. Sear for 4 minutes until golden brown.',
       'timerMinutes': 4,
-      'tip': "Don't move the fish once it's in the pan. Let the crust form naturally for easier flipping.",
-      'imageUrl': 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          "Don't move the fish once it's in the pan. Let the crust form naturally for easier flipping.",
+      'imageUrl':
+          'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 4,
       'title': 'Flip & Add Veggies',
-      'description': 'Flip the salmon and add asparagus to the pan. Cook for another 4 minutes.',
+      'description':
+          'Flip the salmon and add asparagus to the pan. Cook for another 4 minutes.',
       'timerMinutes': 4,
       'tip': 'Arrange asparagus in a single layer for even cooking.',
-      'imageUrl': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=800',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 5,
       'title': 'Add Garlic Butter',
-      'description': 'Add butter and minced garlic. Baste the salmon with melted garlic butter.',
+      'description':
+          'Add butter and minced garlic. Baste the salmon with melted garlic butter.',
       'timerMinutes': 1,
-      'tip': 'Tilt the pan slightly and use a spoon to scoop the butter over the salmon.',
-      'imageUrl': 'https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'Tilt the pan slightly and use a spoon to scoop the butter over the salmon.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 6,
       'title': 'Finish with Lemon',
-      'description': 'Squeeze fresh lemon juice over the salmon and asparagus. Season to taste.',
+      'description':
+          'Squeeze fresh lemon juice over the salmon and asparagus. Season to taste.',
       'timerMinutes': 0,
-      'tip': 'Use half a lemon and squeeze through your fingers to catch any seeds.',
-      'imageUrl': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'Use half a lemon and squeeze through your fingers to catch any seeds.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 7,
       'title': 'Plate & Garnish',
-      'description': 'Transfer salmon and asparagus to plates. Drizzle with remaining pan juices.',
+      'description':
+          'Transfer salmon and asparagus to plates. Drizzle with remaining pan juices.',
       'timerMinutes': 0,
-      'tip': 'A sprinkle of flaky sea salt and fresh dill elevates the presentation.',
-      'imageUrl': 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'A sprinkle of flaky sea salt and fresh dill elevates the presentation.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
     },
     {
       'step': 8,
       'title': 'Serve & Enjoy!',
-      'description': 'Serve immediately while hot. Pair with a crisp white wine or sparkling water with lemon.',
+      'description':
+          'Serve immediately while hot. Pair with a crisp white wine or sparkling water with lemon.',
       'timerMinutes': 0,
-      'tip': 'This dish is best enjoyed fresh. Leftovers can be stored for up to 2 days in the fridge.',
-      'imageUrl': 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
+      'tip':
+          'This dish is best enjoyed fresh. Leftovers can be stored for up to 2 days in the fridge.',
+      'imageUrl':
+          'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800',
     },
   ];
 
   // ── Processing Steps ──
   static const List<Map<String, dynamic>> processingSteps = [
     {'label': 'Uploading', 'sublabel': 'Image successfully uploaded'},
-    {'label': 'Analyzing ingredients...', 'sublabel': 'Identifying vegetables & proteins'},
+    {
+      'label': 'Analyzing ingredients...',
+      'sublabel': 'Identifying vegetables & proteins',
+    },
     {'label': 'Generating Recipes', 'sublabel': 'Waiting for analysis'},
   ];
 

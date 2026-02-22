@@ -1,0 +1,15 @@
+﻿Analyzing KitchenLens...                                        
+
+   info - Don't invoke 'print' in production code - add_cache.dart:31:3 - avoid_print
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\auth\presentation\pages\auth_page.dart:1:8 - unnecessary_import
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\home\presentation\pages\home_page.dart:1:8 - unnecessary_import
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\ingredients\presentation\pages\ingredients_review_page.dart:1:8 - unnecessary_import
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\scan\presentation\pages\processing_page.dart:2:8 - unnecessary_import
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\scan_result\presentation\pages\scan_result_page.dart:1:8 - unnecessary_import
+   info - Unnecessary use of multiple underscores - lib\features\scan_result\presentation\pages\scan_result_page.dart:135:49 - unnecessary_underscores
+   info - Don't invoke 'print' in production code - read_errors.dart:5:3 - avoid_print
+   info - Don't invoke 'print' in production code - run_analyze.dart:5:3 - avoid_print
+   info - Don't invoke 'print' in production code - run_analyze.dart:6:3 - avoid_print
+   info - Don't invoke 'print' in production code - run_analyze.dart:7:3 - avoid_print
+   info - Don't invoke 'print' in production code - run_analyze.dart:8:3 - avoid_print
+
